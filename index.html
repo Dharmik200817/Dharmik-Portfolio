@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Portfolio Website</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">Dharmik</a>
+
+        <nav>
+            <a href="#" class="active"> Home</a>
+            <a href="#about-box" id="about-link">About</a>
+            <a href="#">Projects</a>
+            <a href="#" >Contact</a>
+        </nav>
+    </header>
+    <section class="home">
+        <div class="home-img">
+            <img src="logo.jpg" alt="">
+        </div>
+        <div class="home-content">
+            <h1>Hi, It's <span>Dharmik</span></h1>
+            <h3 class="typing-text">I'm a <span id="typing-text"></span></h3>
+            <p>I'm an enthusiastic learner exploring the world of coding and artificial intelligence. I enjoy building small projects, trying out new technologies, and understanding how things work behind the scenes. From writing code to experimenting with AI tools</p>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            
+            </div>
+        </div>            
+    </section>
+    <section class="about-section">
+        <div class="about-heading">
+            <h1>About Me</h1>
+        </div>
+        <div class="about-container" id="about-box">
+            <div class="about-grid">
+                <!-- Left Column -->
+                <div class="about-col">
+                    <div class="info-item">
+                        <label>Name:</label>
+                        <span>Dharmik</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Location:</label>
+                        <span>Gujarat, India</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Studying at:</label>
+                        <span>P P Savani University</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Course Duration:</label>
+                        <span>2024-2027</span>
+                    </div>
+                </div>
+                <!-- Right Column -->
+                <div class="about-col">
+                    <div class="info-item">
+                        <label>GitHub:</label>
+                        <a href="https://github.com/Dharmik200817" target="_blank">Dharmik200817</a>
+                    </div>
+                    <div class="info-item">
+                        <label>LinkedIn:</label>
+                        <a href="https://www.linkedin.com/in/dharmikchokhaliya/" target="_blank">dharmikchokhaliya</a>
+                    </div>
+                    <div class="info-item">
+                        <label>Email:</label>
+                        <span>dharmikchokhaliya62@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="typewriter.js"></script>
+<script>
+function onEntry(entries, observer) {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const aboutBox = document.querySelector('.about-box');
+  if (aboutBox) {
+    const observer = new IntersectionObserver(onEntry, { threshold: 0.2 });
+    observer.observe(aboutBox);
+  }
+});
+</script>
+</body>
+</html>
