@@ -313,12 +313,11 @@ span{
 
 .info-text {
     font-size: 1.8rem;
-    color: #fff;  /* Set text color to white */
+    color: #fff;  
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-/* Make sure links also start as white but keep hover effect */
 a.info-text {
     color: #fff;
 }
@@ -373,10 +372,17 @@ a.info-text:hover {
 .about-container {
     max-width: 1100px;
     margin: 0 auto;
-    background-color: #1c1c1c;
-    padding: 4rem;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(183, 75, 75, 0.2);
+    background: #232323;
+    border-radius: 16px;
+    box-shadow: 20px 4px 24px 0 rgba(183, 75, 75, 0.18);
+    padding: 40px 30px;
+    transition: box-shadow 0.3s, background 0.3s, transform 0.2s;
+}
+
+.about-container:hover {
+    box-shadow: 20px 18px 36px 10px rgba(183, 75, 75, 0.32);
+    background: #222121;
+    transform: translateY(-4px) scale(1.012);
 }
 
 .about-grid {
