@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <title>Portfolio Website</title>
 </head>
+<script src="js/smooth-scroll.js"></script>
 <body>
     <header>
         <a href="#" class="logo">Dharmik</a>
@@ -33,7 +34,7 @@
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
             
             </div>
-        </div>            
+        </div> 
     </section>
     <section class="about-section">
         <div class="about-heading">
@@ -41,7 +42,7 @@
         </div>
         <div class="about-container" id="about-box">
             <div class="about-grid">
-                <!-- Left Column -->
+                
                 <div class="about-col">
                     <div class="info-item">
                         <label>Name:</label>
@@ -80,22 +81,20 @@
     </section>
     <script src="typewriter.js"></script>
 <script>
-function onEntry(entries, observer) {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const aboutBox = document.querySelector('.about-box');
-  if (aboutBox) {
-    const observer = new IntersectionObserver(onEntry, { threshold: 0.2 });
-    observer.observe(aboutBox);
-  }
-});
+  window.SmoothScrollOptions = {
+    stepSize: 80,
+    animationTime: 1000,
+    arrowScroll: 120
+  };
 </script>
+<script src="smooth-scroll.js"></script>
+    <script>
+        // Smooth scroll for the "About" link
+        document.getElementById('about-link').addEventListener('click', function(event) {
+            event.preventDefault();
+            const aboutBox = document.getElementById('about-box');
+            aboutBox.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>
