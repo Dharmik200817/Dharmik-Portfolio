@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="style.css">
     <title>Portfolio Website</title>
 </head>
-<script src="js/smooth-scroll.js"></script>
 <body>
+    <script src="smooth-scroll.js"></script>
     <header>
         <a href="#" class="logo">Dharmik</a>
 
@@ -38,46 +38,39 @@
     </section>
     <section class="about-section">
         <div class="about-heading">
-            <h1>About Me</h1>
+            <h1 class="about-heading scroll-animate">About Me</h1>
         </div>
-        <div class="about-container" id="about-box">
-            <div class="about-grid">
-                
-                <div class="about-col">
-                    <div class="info-item">
-                        <label>Name:</label>
-                        <span>Dharmik</span>
-                    </div>
-                    <div class="info-item">
-                        <label>Location:</label>
-                        <span>Gujarat, India</span>
-                    </div>
-                    <div class="info-item">
-                        <label>Studying at:</label>
-                        <span>P P Savani University</span>
-                    </div>
-                    <div class="info-item">
-                        <label>Course Duration:</label>
-                        <span>2024-2027</span>
-                    </div>
-                </div>
-                <!-- Right Column -->
-                <div class="about-col">
-                    <div class="info-item">
-                        <label>GitHub:</label>
-                        <a href="https://github.com/Dharmik200817" target="_blank">Dharmik200817</a>
-                    </div>
-                    <div class="info-item">
-                        <label>LinkedIn:</label>
-                        <a href="https://www.linkedin.com/in/dharmikchokhaliya/" target="_blank">dharmikchokhaliya</a>
-                    </div>
-                    <div class="info-item">
-                        <label>Email:</label>
-                        <span>dharmikchokhaliya62@gmail.com</span>
-                    </div>
-                </div>
-            </div>
+        
+        <div class="about-container scroll-animate">
+           <div class="about-grid">
+  <div class="about-col">
+    <div class="info-item">
+      <label>Name:</label>
+      <span>Dharmik</span>
+    </div>
+    <div class="info-item">
+      <label>Studying at:</label>
+      <span>P P Savani University</span>
+    </div>
+    <div class="info-item">
+      <label>Course Duration:</label>
+      <span>2024–2027</span>
+    </div>
+  </div>
+  <div class="about-col">
+    <div class="info-item">
+      <label>Email:</label>
+      <span>dharmikchokhaliya62@gmail.com</span>
+    </div>
+    <div class="info-item">
+      <label>Location:</label>
+      <span>Gujarat, India</span>
+    </div>
+  </div>
+</div>
+
         </div>
+    </div>
     </section>
     <script src="typewriter.js"></script>
 <script>
@@ -87,7 +80,6 @@
     arrowScroll: 120
   };
 </script>
-<script src="smooth-scroll.js"></script>
     <script>
         // Smooth scroll for the "About" link
         document.getElementById('about-link').addEventListener('click', function(event) {
@@ -96,5 +88,19 @@
             aboutBox.scrollIntoView({ behavior: 'smooth' });
         });
     </script>
+<script>
+  function animateOnScroll() {
+    const elements = document.querySelectorAll('.scroll-animate');
+    elements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight - 100) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', animateOnScroll);
+  window.addEventListener('load', animateOnScroll);
+</script>
 </body>
 </html>
