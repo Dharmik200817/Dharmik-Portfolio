@@ -8,11 +8,14 @@
     border: none;
     outline: none;
     font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
 }
 
 html {
     font-size: 62.5%;
-    scroll-behavior: smooth;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
 }
 
 body{
@@ -21,6 +24,14 @@ body{
     overflow-x: hidden;
     background-color: black;
     color: white;
+    padding: 40px;
+
+}
+
+@media(max-widhth: 768px){
+    body {
+        padding: 10px;
+    }
 }
 
 header{
@@ -81,6 +92,7 @@ nav a.active{
         padding: 1rem solid;
         background-color: #161616;
         border-top: 0.1rem solid rgba(0,0,0,0.1);
+         flex-direction: column;
     }
 
     nav.active{
@@ -188,6 +200,8 @@ span{
     border: 2px solid #b74b4b;
     transition: 0.3s ease;
     cursor: pointer;
+    width: 100%;
+    font-size: 14px;
 }
 
 .btn:hover{
@@ -268,6 +282,7 @@ span{
     gap: 80px;  /* Increased gap between columns */
     margin: 20px 40px;
     width: 100%;
+
 }
 
 .left-about, .right-about {
@@ -356,6 +371,8 @@ a.info-text:hover {
     min-height: 100vh;
     padding: 5rem 9% 2rem;
     position: relative;
+    animation: popup 0.5s ease-in-out;
+    animation-duration: 1.3s;
 }
 
 .about-heading {
@@ -370,13 +387,15 @@ a.info-text:hover {
 }
 
 .about-container {
-    max-width: 1100px;
+    max-width: 900px;
     margin: 0 auto;
-    background: #232323;
-    border-radius: 16px;
-    box-shadow: 20px 4px 24px 0 rgba(183, 75, 75, 0.18);
     padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px 0 rgba(183, 75, 75, 0.18);
+    background: #232323;
     transition: box-shadow 0.3s, background 0.3s, transform 0.2s;
+    overflow-x: auto; /* Allow horizontal scroll if needed */
+    word-wrap: break-word;
 }
 
 .about-container:hover {
@@ -386,22 +405,25 @@ a.info-text:hover {
 }
 
 .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
 }
 
 .about-col {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .info-item {
     display: flex;
     align-items: center;
-    gap: 2rem; /* Add a small gap */
-    white-space: nowrap;  /* Prevent line breaks */
+    gap: 0.5rem; /* Reduced space between label and span */
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    min-width: 0;
 }
 
 .info-item label {
@@ -409,17 +431,28 @@ a.info-text:hover {
     font-weight: 600;
     font-size: 2.0rem;  /* Increased font size */
     width: 160px;
-    min-width: 160px;
     display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 150px;  /* ⬅️ Increased from 120px */
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .info-item span,
 .info-item a {
     color: #fff;
-    font-size: 2.0rem;  /* Increased font size */
+    font-size: 2.0rem;
     text-decoration: none;
     transition: color 0.3s ease;
-    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    max-width: 100%;
+    display: inline-block;
+    white-space: normal;      /* ⬅️ Allows multi-line content */   /* ⬅️ Breaks long content like emails or text */
+    max-width: 100%;
 }
 
 .info-item a:hover {
@@ -437,3 +470,210 @@ a.info-text:hover {
     opacity: 0;
     transform: translateY(0);
 }
+
+
+/* Responsive adjustments for About section and grid */
+.about-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px 0 rgba(183, 75, 75, 0.18);
+    background: #232323;
+    transition: box-shadow 0.3s, background 0.3s, transform 0.2s;
+    overflow-x: auto; /* Allow horizontal scroll if needed */
+    
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    overflow: grid-auto-flow;
+}
+
+@media (max-width: 900px) {
+  .about-heading {
+    margin-bottom: 3rem;
+  }
+
+  .about-heading h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-container {
+    padding: 20px 5vw;
+    width: 100%;
+  }
+
+  .about-box {
+    width: 100%;
+    padding: 30px 20px;
+    margin-top: 0.5rem;
+    height: auto;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .about-col {
+    gap: 1rem;
+  }
+
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    white-space: normal;
+  }
+
+  .info-item label,
+  .info-item span,
+  .info-item a {
+    font-size: 1.2rem;
+    width: auto;
+    min-width: unset;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+
+  .info-item label {
+    font-weight: 600;
+    color: #b74b4b;
+  }
+
+  .about-box p {
+    font-size: 1.4rem;
+    line-height: 1.8;
+  }
+
+  .about-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .about-heading h1 {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .about-container {
+    padding: 16px 4vw;
+  }
+
+  .about-box {
+    width: 100%;
+    padding: 24px 16px;
+    margin-top: 0.5rem;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+
+  .about-col {
+    gap: 0.7rem;
+  }
+
+  .info-item label,
+  .info-item span,
+  .info-item a {
+    font-size: 1.1rem;
+  }
+
+  .info-item {
+    gap: 0.7rem;
+    flex-direction: column;
+    align-items: flex-start;
+    white-space: normal;
+  }
+
+  .info-item label {
+    width: auto;
+    min-width: unset;
+  }
+}
+
+@media (max-width: 500px) {
+  .about-heading {
+    margin-bottom: 3rem; /* Reduce space under heading */
+  }
+
+  .about-heading h1 {
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-container {
+    padding: 12px 3vw;
+    width: 100%;
+  }
+
+  .about-box {
+    width: 100%;
+    padding: 24px 16px;
+    margin-top: 0.5rem; /* Reduce space from heading */
+    height: auto; /* Fit content height */
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .about-col {
+    gap: 0.7rem;
+  }
+
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    white-space: normal;
+  }
+
+  .info-item label,
+  .info-item span,
+  .info-item a {
+    font-size: 1rem;
+    width: auto;
+    min-width: unset;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+
+  .info-item label {
+    font-weight: 600;
+    color: #b74b4b;
+  }
+
+  .about-box p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .about-box h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
