@@ -9,14 +9,13 @@
     <title>Portfolio Website</title>
 </head>
 <body>
-    <script src="smooth-scroll.js"></script>
     <header>
         <a href="#" class="logo">Dharmik</a>
 
         <nav>
             <a href="#" class="active"> Home</a>
-            <a href="#about-box" id="about-link">About</a>
-            <a href="#">Projects</a>
+            <a href="#about-section" id="about-link">About</a>
+            <a href="projects.html">Projects</a>
             <a href="#" >Contact</a>
         </nav>
     </header>
@@ -30,13 +29,13 @@
             <p>I'm an enthusiastic learner exploring the world of coding and artificial intelligence. I enjoy building small projects, trying out new technologies, and understanding how things work behind the scenes. From writing code to experimenting with AI tools</p>
             <div class="social-icons">
                 <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="#"><i class="fa-brands fa-github"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://github.com/Dharmik200817"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.instagram.com/dharmik_chokhaliya17?utm_source=qr&igsh=MTgzdGp3MDY5dmF6Mg=="><i class="fa-brands fa-instagram"></i></a>
             
             </div>
         </div> 
     </section>
-    <section class="about-section">
+    <section class="about-section" id="about-section">
         <div class="about-heading">
             <h1 class="about-heading scroll-animate">About Me</h1>
         </div>
@@ -73,34 +72,28 @@
     </div>
     </section>
     <script src="typewriter.js"></script>
-<script>
-  window.SmoothScrollOptions = {
-    stepSize: 80,
-    animationTime: 1000,
-    arrowScroll: 120
-  };
-</script>
+    <script src="smooth-scroll.js"></script>
     <script>
-        // Smooth scroll for the "About" link
-        document.getElementById('about-link').addEventListener('click', function(event) {
-            event.preventDefault();
-            const aboutBox = document.getElementById('about-box');
-            aboutBox.scrollIntoView({ behavior: 'smooth' });
-        });
-    </script>
-<script>
-  function animateOnScroll() {
-    const elements = document.querySelectorAll('.scroll-animate');
-    elements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= window.innerHeight - 100) {
-        el.classList.add('visible');
+      // Animation on scroll for About Me heading and box
+  function animateOnScroll(entries, observer) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animated');
+        observer.unobserve(entry.target); // Only animate once
       }
     });
   }
 
-  window.addEventListener('scroll', animateOnScroll);
-  window.addEventListener('load', animateOnScroll);
-</script>
+  const observer = new IntersectionObserver(animateOnScroll, {
+    threshold: 0.2 // or your preferred value
+  });
+
+  observer.observe(document.querySelector('.about-section'));
+
+  document.getElementById('about-link').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('about-section').scrollIntoView({ behavior: 'smooth' });
+  });
+    </script>
 </body>
 </html>
