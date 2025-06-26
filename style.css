@@ -860,6 +860,10 @@ skills-timeline {
 
 @media (max-width: 500px) {
   
+  .nav a {
+    font-size: 10px;
+  }
+  
   .header{
     font-size: sma;
   }
@@ -939,6 +943,11 @@ skills-timeline {
     width: 35px;
     height: 35px;
     font-size: 1.5rem;
+  }
+  
+  header a.logo {
+    font-size: 1.1rem;
+    padding: 0.2rem 0;
   }
 }
 
