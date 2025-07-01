@@ -9,7 +9,7 @@
     <link rel ="stylesheet" href="smooth-scroll.js">
     <script src="typewriter.js"></script>
     <title>Dharmik Chokhaliya | Portfolio</title>
-    <link rel="icon" type="image/png" href="logo2.png">
+    <link rel="icon" type="image/png" href="logo2.jpg">
 </head>
 <body>
     <header>
@@ -19,7 +19,7 @@
             <a href="#" class="active"> Home</a>
             <a href="#about-section" id="about-link">About</a>
             <a href="projects.html">Projects</a>
-            <a href="#" >Contact</a>
+            <a href="#skills" id="skills-link">My Skills</a>
         </nav>
     </header>
     <section class="home">
@@ -132,10 +132,10 @@
 
   </div>
 </section>
-
-    <footer>
-        <p>&copy; 2024 Dharmik Chokhaliya. All rights reserved.</p>
-    </footer>
+  <hr>
+  <footer>
+    <p>&copy; 2024 Dharmik Chokhaliya. All rights reserved.</p>
+  </footer>
 <script>
 function animateOnScroll(entries, observer) {
   entries.forEach(entry => {
@@ -155,6 +155,15 @@ sectionObserver.observe(document.querySelector('.about-section'));
 document.getElementById('about-link').addEventListener('click', function(e) {
   e.preventDefault();
   document.getElementById('about-section').scrollIntoView({ behavior: 'smooth' });
+});
+
+document.getElementById('skills-link').addEventListener('touchstart', function(e) {
+  e.preventDefault();
+  document.getElementById('skills').scrollIntoView({ behavior: 'smooth' });
+});
+document.getElementById('skills-link').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('skills').scrollIntoView({ behavior: 'smooth' });
 });
 </script>
 
