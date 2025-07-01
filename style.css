@@ -271,9 +271,9 @@ span{
 
 .content.left {
   margin-right: auto;
-  margin-left: 0;
+  margin-left: -25px;
   text-align: right;
-  padding-right: 2rem;
+  padding-right: auto;
 }
 
 .content.right {
@@ -327,6 +327,19 @@ span{
   }
 }
 
+/* Add float animation keyframes */
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 
 
 .timeline-item.visible.left {
@@ -370,6 +383,11 @@ span{
   animation: fadeInUp 0.8s ease-out forwards;
 }
 
+
+/* Apply float animation to .timeline-item .content on visible */
+.timeline-item.visible .content {
+  animation: float 2.2s ease-in-out infinite;
+}
 
 @media (max-width: 1000px){
     .home{
@@ -859,9 +877,14 @@ skills-timeline {
 
 
 @media (max-width: 500px) {
+  nav a {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    padding: 0.2rem 0.3rem;
+  }
   
-  .nav a {
-    font-size: 10px;
+  nav a.active {
+    font-size: 1.2rem;
   }
   
   .header{
@@ -945,6 +968,8 @@ skills-timeline {
     font-size: 1.5rem;
   }
   
+    
+
   header a.logo {
     font-size: 1.1rem;
     padding: 0.2rem 0;
@@ -960,7 +985,10 @@ skills-timeline {
     position: relative;
     bottom: 0;
     width: 100%;
+    display: flex;
     justify-content: center;
-    text-align: center;
+    align-items: center;
     margin-top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
 }
