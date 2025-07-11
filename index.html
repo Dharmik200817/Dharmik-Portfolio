@@ -16,14 +16,14 @@
 
         <nav>
             <a href="#" class="active"> Home</a>
-            <a href="#about-section" id="about-link">About</a>
+            <a href="#about" id="about-link">About</a>
             <a href="projects.html">Projects</a>
             <a href="#skills" id="skills-link">My Skills</a>
         </nav>
     </header>
     <section class="home">
         <div class="home-img">
-            <img src="logo.jpg" alt="">
+            <img src="logo.png" alt="">
         </div>
         
         <div class="home-content">
@@ -226,12 +226,21 @@ items.forEach(item => {
                 socialIcons.style.opacity = "1";
             }, 2500);
 
-            // Animate navbar
             setTimeout(() => {
                 navbar.style.animation = "navbarSlideIn 1s ease forwards";
             }, 1000);
         });
     </script>
+
+<script>
+document.getElementById('about-link').addEventListener('click', function(e) {
+  e.preventDefault();
+  const aboutSection = document.getElementById('about');
+  if (aboutSection) {
+    aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+</script>
 
 
 
