@@ -48,8 +48,7 @@
             <div>
               <span class="about-label">Email</span>
               <a href="mailto:Dharmikchokhaliya62@gmail.com" class="about-link"
-                >Dharmikchokhaliya62@gmail.com</a
-              >
+                >Dharmikchokhaliya62@gmail.com</a>
             </div>
             <div>
               <span class="about-label">GitHub</span>
@@ -80,8 +79,7 @@
                 href=""
                 target="_blank"
                 class="about-link"
-                >Dharmik Chokhaliya</a
-              >
+                >Dharmik Chokhaliya</a>
             </div>
           </div>
         </div>
@@ -168,7 +166,6 @@ sectionObserver.observe(document.querySelector('.about-section'));
 </script>
 
 <script>
-// Animate section title for skills
 const sectionTitle = document.querySelector('.section-title');
 if (sectionTitle) {
   const titleObserver = new IntersectionObserver(entries => {
@@ -182,7 +179,6 @@ if (sectionTitle) {
   titleObserver.observe(sectionTitle);
 }
 
-// Animate skills timeline items
 const items = document.querySelectorAll('.timeline-item');
 const timelineObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -231,7 +227,6 @@ items.forEach(item => {
             }, 1000);
         });
     </script>
-
 <script>
 document.getElementById('about-link').addEventListener('click', function(e) {
   e.preventDefault();
@@ -241,9 +236,5 @@ document.getElementById('about-link').addEventListener('click', function(e) {
   }
 });
 </script>
-
-
-
-
 </body>
 </html>
