@@ -48,9 +48,11 @@ h1 {
     background: #181818;
     border-radius: 1.5rem;
     box-shadow: 0 0 20px #b74b4b44;
-    padding: 2.5rem 2rem;
-    width: 100%;
-    max-width: 420px;
+    padding: 3rem 3.5rem;
+    width: 80vw;
+    max-width: 600px;
+    min-height: 200px;
+    margin: 6vh auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -198,6 +200,10 @@ button:hover {
         display: block;
         font-size: 2rem;
         margin: 3rem 0;
+        color: #f0f0f0;
+        font-weight: 600;
+        transition: color 0.3s ease, border-bottom 0.3s ease;
+        border-bottom: 2px solid transparent;
     }
 
     nav a:hover,
@@ -205,6 +211,8 @@ button:hover {
         padding: 0rem;
         border-radius: 0.5rem;
         border-bottom: 0.5rem solid #b74b4b;
+        color: #ff6347;
+        border-bottom: 2px solid #ff6347;
     }
 
     .atm-container {

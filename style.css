@@ -28,10 +28,6 @@ body{
     color: white;
     padding: 40px;
     scroll-behavior: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Center all content vertically and horizontally */
 }
 
 @media(max-widhth: 768px){
@@ -70,12 +66,12 @@ header{
     transform: scale(1.1);
 }
 
-nav a{
+ a{
     font-size: 2rem; 
     color: #f0f0f0; 
     margin-left: 3rem; 
     font-weight: 600; 
-    transition: color 0.3s ease, border-bottom 0.3s ease; 
+    transitionavn: color 0.3s ease, border-bottom 0.3s ease; 
     border-bottom: 2px solid transparent;
 }
 
@@ -1296,15 +1292,12 @@ html {
     background: #181818;
     border-radius: 1.5rem;
     box-shadow: 0 0 20px #b74b4b44;
-    padding: 3rem 3.5rem;
-    width: 80vw;
-    max-width: 600px;
-    min-height: 200px;
-    margin: 6vh auto;
+    padding: 2.5rem 2rem;
+    width: 100%;
+    max-width: 420px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     animation: atmFadeIn 1.2s cubic-bezier(0.4,0,0.2,1);
 }
 

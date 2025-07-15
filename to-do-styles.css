@@ -14,10 +14,11 @@ body {
   background: #232323;
   border-radius: 20px;
   box-shadow: 0 8px 32px 0 rgba(183, 75, 75, 0.25), 0 1.5px 6px 0 #b74b4b33;
-  padding: 44px 36px 36px 36px;
-  margin-top: 60px;
-  width: 100%;
-  max-width: 440px;
+  padding: 3rem 3.5rem;
+  margin: 6vh auto;
+  width: 80vw;
+  max-width: 600px;
+  min-height: 200px;
   animation: fadeIn 1s;
   transition: box-shadow 0.3s, transform 0.2s, background 0.3s;
 }
