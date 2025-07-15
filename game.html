@@ -80,7 +80,6 @@
         let score = 0;
         let gameOver = false;
 
-        // Touch controls for mobile
         let touchStartX = 0, touchStartY = 0;
         function handleTouchStart(e) {
             const t = e.touches[0];
@@ -103,20 +102,45 @@
             touchStartY = t.clientY;
         }
 
-        // On mobile, use the whole screen for swipe/tap controls
-        if (window.matchMedia('(max-width: 500px)').matches) {
-            document.body.addEventListener('touchstart', handleTouchStart);
-            document.body.addEventListener('touchmove', handleTouchMove);
-            document.body.addEventListener('touchend', function(e) {
-                if (gameOver) resetGame();
-            });
-        } else {
-            canvas.addEventListener('touchstart', handleTouchStart);
-            canvas.addEventListener('touchmove', handleTouchMove);
-            canvas.addEventListener('touchend', function(e) {
-                if (gameOver) resetGame();
-            });
+        // --- Touch and Restart Controls ---
+        function isMobile() {
+            return window.matchMedia('(max-width: 500px)').matches;
         }
+
+        function setupControls() {
+            // Remove all previous listeners to avoid duplicates
+            document.body.ontouchstart = null;
+            document.body.ontouchmove = null;
+            document.body.ontouchend = null;
+            canvas.ontouchstart = null;
+            canvas.ontouchmove = null;
+            canvas.ontouchend = null;
+            canvas.onmousedown = null;
+
+            if (isMobile()) {
+                document.body.addEventListener('touchstart', handleTouchStart, {passive: false});
+                document.body.addEventListener('touchmove', handleTouchMove, {passive: false});
+                document.body.addEventListener('touchend', function(e) {
+                    if (gameOver) resetGame();
+                });
+            } else {
+                canvas.addEventListener('touchstart', handleTouchStart, {passive: false});
+                canvas.addEventListener('touchmove', handleTouchMove, {passive: false});
+                canvas.addEventListener('touchend', function(e) {
+                    if (gameOver) resetGame();
+                });
+                canvas.addEventListener('mousedown', function(e) {
+                    if (gameOver) resetGame();
+                });
+            }
+        }
+
+        // Always allow Enter to restart
+        function keydownRestartHandler(e) {
+            if (gameOver && (e.key === 'Enter')) resetGame();
+        }
+        document.removeEventListener('keydown', keydownRestartHandler);
+        document.addEventListener('keydown', keydownRestartHandler);
 
         function drawSnake() {
             ctx.fillStyle = '#b74b4b';
@@ -160,7 +184,6 @@
                     return;
                 }
             }
-            // Apple collision
             if (head.x === apple.x && head.y === apple.y) {
                 score++;
                 document.getElementById('score').textContent = 'Score: ' + score;
@@ -224,6 +247,8 @@
         }
         draw();
         gameInterval = setTimeout(gameLoop, 400);
+        setupControls();
+        window.addEventListener('resize', setupControls);
     </script>
 </body>
 </html>
