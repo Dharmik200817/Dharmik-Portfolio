@@ -28,6 +28,10 @@ body{
     color: white;
     padding: 40px;
     scroll-behavior: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center all content vertically and horizontally */
 }
 
 @media(max-widhth: 768px){
@@ -1292,12 +1296,15 @@ html {
     background: #181818;
     border-radius: 1.5rem;
     box-shadow: 0 0 20px #b74b4b44;
-    padding: 2.5rem 2rem;
-    width: 100%;
-    max-width: 420px;
+    padding: 3rem 3.5rem;
+    width: 80vw;
+    max-width: 600px;
+    min-height: 200px;
+    margin: 6vh auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     animation: atmFadeIn 1.2s cubic-bezier(0.4,0,0.2,1);
 }
 
