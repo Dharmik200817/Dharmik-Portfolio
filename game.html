@@ -44,13 +44,20 @@
         }
         @media (max-width: 500px) {
             h1 {
-                font-size: 1.3rem;
+                font-size: 2.2rem;
             }
             .score {
-                font-size: 1rem;
+                font-size: 1.7rem;
             }
             .instructions {
-                font-size: 0.9rem;
+                font-size: 1.3rem;
+            }
+            #gameCanvas {
+                width: 98vw;
+                max-width: 98vw;
+                height: 98vw;
+                max-height: 98vw;
+                border-width: 5px;
             }
         }
     </style>
@@ -75,12 +82,12 @@
 
         // Touch controls for mobile
         let touchStartX = 0, touchStartY = 0;
-        canvas.addEventListener('touchstart', function(e) {
+        function handleTouchStart(e) {
             const t = e.touches[0];
             touchStartX = t.clientX;
             touchStartY = t.clientY;
-        });
-        canvas.addEventListener('touchmove', function(e) {
+        }
+        function handleTouchMove(e) {
             if (gameOver) return;
             const t = e.touches[0];
             const dx = t.clientX - touchStartX;
@@ -94,7 +101,22 @@
             }
             touchStartX = t.clientX;
             touchStartY = t.clientY;
-        });
+        }
+
+        // On mobile, use the whole screen for swipe/tap controls
+        if (window.matchMedia('(max-width: 500px)').matches) {
+            document.body.addEventListener('touchstart', handleTouchStart);
+            document.body.addEventListener('touchmove', handleTouchMove);
+            document.body.addEventListener('touchend', function(e) {
+                if (gameOver) resetGame();
+            });
+        } else {
+            canvas.addEventListener('touchstart', handleTouchStart);
+            canvas.addEventListener('touchmove', handleTouchMove);
+            canvas.addEventListener('touchend', function(e) {
+                if (gameOver) resetGame();
+            });
+        }
 
         function drawSnake() {
             ctx.fillStyle = '#b74b4b';
@@ -159,6 +181,33 @@
             if (e.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
         });
 
+        let gameInterval;
+        function resetGame() {
+            snake = [{x: 9*box, y: 10*box}];
+            direction = null;
+            apple = {
+                x: Math.floor(Math.random()*20)*box,
+                y: Math.floor(Math.random()*20)*box
+            };
+            score = 0;
+            gameOver = false;
+            document.getElementById('score').textContent = 'Score: ' + score;
+            draw();
+            clearTimeout(gameInterval);
+            setTimeout(gameLoop, 400);
+        }
+        // Restart on tap/click
+        canvas.addEventListener('touchend', function(e) {
+            if (gameOver) resetGame();
+        });
+        canvas.addEventListener('mousedown', function(e) {
+            if (gameOver) resetGame();
+        });
+        // Restart on Enter key
+        document.addEventListener('keydown', function(e) {
+            if (gameOver && (e.key === 'Enter')) resetGame();
+        });
+
         function gameLoop() {
             if (gameOver) {
                 ctx.fillStyle = '#fff';
@@ -171,10 +220,10 @@
             }
             moveSnake();
             draw();
-            setTimeout(gameLoop, 200);
+            gameInterval = setTimeout(gameLoop, 200);
         }
         draw();
-        setTimeout(gameLoop, 400);
+        gameInterval = setTimeout(gameLoop, 400);
     </script>
 </body>
 </html>
