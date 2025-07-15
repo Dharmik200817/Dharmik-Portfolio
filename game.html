@@ -26,6 +26,11 @@
             border-radius: 10px;
             box-shadow: 0 0 24px #b74b4b33;
             display: block;
+            width: 90vw;
+            max-width: 400px;
+            height: 90vw;
+            max-height: 400px;
+            touch-action: none;
         }
         .score {
             font-size: 1.3rem;
@@ -37,11 +42,22 @@
             margin-bottom: 1rem;
             font-size: 1rem;
         }
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 1.3rem;
+            }
+            .score {
+                font-size: 1rem;
+            }
+            .instructions {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
 <body>
     <h1>Snake Game</h1>
-    <div class="instructions">Use arrow keys to move the snake. Eat apples to grow. Don't hit the wall or yourself!</div>
+    <div class="instructions">Use arrow keys or swipe to move the snake. Eat apples to grow. Don't hit the wall or yourself!</div>
     <div class="score" id="score">Score: 0</div>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
     <script>
@@ -56,6 +72,29 @@
         };
         let score = 0;
         let gameOver = false;
+
+        // Touch controls for mobile
+        let touchStartX = 0, touchStartY = 0;
+        canvas.addEventListener('touchstart', function(e) {
+            const t = e.touches[0];
+            touchStartX = t.clientX;
+            touchStartY = t.clientY;
+        });
+        canvas.addEventListener('touchmove', function(e) {
+            if (gameOver) return;
+            const t = e.touches[0];
+            const dx = t.clientX - touchStartX;
+            const dy = t.clientY - touchStartY;
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx > 20 && direction !== 'LEFT') direction = 'RIGHT';
+                else if (dx < -20 && direction !== 'RIGHT') direction = 'LEFT';
+            } else {
+                if (dy > 20 && direction !== 'UP') direction = 'DOWN';
+                else if (dy < -20 && direction !== 'DOWN') direction = 'UP';
+            }
+            touchStartX = t.clientX;
+            touchStartY = t.clientY;
+        });
 
         function drawSnake() {
             ctx.fillStyle = '#b74b4b';
@@ -132,7 +171,7 @@
             }
             moveSnake();
             draw();
-            setTimeout(gameLoop, 200); // Slower speed
+            setTimeout(gameLoop, 200);
         }
         draw();
         setTimeout(gameLoop, 400);
