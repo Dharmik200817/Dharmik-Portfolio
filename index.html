@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="typewriter.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.polyfills.min.js"></script>
+    <script src="index.js"></script>
+    <script src="typewriter.js"></script>
     <title>Dharmik Chokhaliya | Portfolio</title>
     <link rel="icon" type="image/png" href="logo2.png">
 </head>
@@ -146,93 +149,5 @@
   <footer class="site-footer">
     <p>&copy; 2024 Dharmik Chokhaliya. All rights reserved.</p>
   </footer>
-<script>
-function animateOnScroll(entries, observer) {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('animated');
-      observer.unobserve(entry.target);
-    }
-  });
-}
-
-const sectionObserver = new IntersectionObserver(animateOnScroll, {
-  threshold: 0.2
-});
-
-sectionObserver.observe(document.querySelector('.about-section'));
-</script>
-
-<script>
-const sectionTitle = document.querySelector('.section-title');
-if (sectionTitle) {
-  const titleObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        sectionTitle.classList.add('visible');
-        titleObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-  titleObserver.observe(sectionTitle);
-}
-
-const items = document.querySelectorAll('.timeline-item');
-const timelineObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      timelineObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.2 });
-items.forEach(item => {
-  timelineObserver.observe(item);
-});
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.polyfills.min.js"></script>
-<script>
-  var scroll = new SmoothScroll('a[href*="#"]', {
-    speed: 800
-  });
-</script>
-
-<script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const logo = document.querySelector(".logo");
-            const homeContent = document.querySelector(".home-content");
-            const socialIcons = document.querySelector(".social-icons");
-            const navbar = document.querySelector(".navbar");
-
-            setTimeout(() => {
-                logo.style.transform = "translateX(0)";
-                logo.style.opacity = "1";
-            }, 500);
-
-            setTimeout(() => {
-                homeContent.style.transform = "translateX(0)";
-                homeContent.style.opacity = "1";
-            }, 1500);
-
-            setTimeout(() => {
-                socialIcons.style.transform = "translateY(0)";
-                socialIcons.style.opacity = "1";
-            }, 2500);
-
-            setTimeout(() => {
-                navbar.style.animation = "navbarSlideIn 1s ease forwards";
-            }, 1000);
-        });
-    </script>
-<script>
-document.getElementById('about-link').addEventListener('click', function(e) {
-  e.preventDefault();
-  const aboutSection = document.getElementById('about');
-  if (aboutSection) {
-    aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-});
-</script>
 </body>
 </html>

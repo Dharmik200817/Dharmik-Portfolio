@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // --- Typewriter Setup ---
   const phrases = [
     "Learning JavaScript.",
     "Building Web Applications.",
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentPhrase = phrases[phraseIndex];
     const visibleText = currentPhrase.substring(0, charIndex);
 
-    // Add blinking cursor
     typingElement.innerHTML = visibleText + '<span class="cursor">|</span>';
 
     if (!isDeleting && charIndex < currentPhrase.length) {
@@ -28,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       if (!isDeleting) {
         isDeleting = true;
-        setTimeout(typeEffect, 2000); // pause before deleting
+        setTimeout(typeEffect, 2000); 
       } else {
         isDeleting = false;
         phraseIndex = (phraseIndex + 1) % phrases.length;
