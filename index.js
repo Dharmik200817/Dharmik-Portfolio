@@ -7,6 +7,7 @@ function animateOnScroll(entries, observer) {
   });
 }
 
+
 const sectionObserver = new IntersectionObserver(animateOnScroll, {
   threshold: 0.2
 });
