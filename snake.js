@@ -77,10 +77,10 @@ document.addEventListener('keydown', e => {
 });
 
 function drawSnake() {
-    ctx.fillStyle = '#b74b4b';
     snake.forEach((segment, i) => {
+        ctx.fillStyle = i === 0 ? '#ff0000' : '#4caf50'; // Head is now red
+        ctx.strokeStyle = i === 0 ? '#b71c1c' : '#2e7d32'; // Darker red border for head
         ctx.fillRect(segment.x, segment.y, box, box);
-        ctx.strokeStyle = '#fff';
         ctx.strokeRect(segment.x, segment.y, box, box);
     });
 }

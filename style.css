@@ -55,7 +55,7 @@ header{
 }
 
 .logo{
-    font-size: 3rem;
+    font-size: 2.3rem;
     color: #b74b4b;
     font-weight: 800;
     cursor: pointer;
@@ -541,6 +541,10 @@ nav a:nth-child(4) {
     .home{
         gap: 4rem;
     }
+
+    .logo a{
+    font-size: 3.5rem;
+  }
 }
 
 @media(max-width:995px){
@@ -1617,4 +1621,10 @@ button:hover {
 
 .timeline-item.visible {
   animation: skillFadeIn 0.8s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+@media (min-width: 950px) and (max-width: 970px) {
+  .logo {
+    font-size: 3.2rem; /* Adjust size as desired */
+  }
 }
