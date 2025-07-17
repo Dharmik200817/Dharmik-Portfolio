@@ -233,6 +233,14 @@ document.getElementById('about-link').addEventListener('click', function(e) {
     aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 });
+
+document.getElementById('skills-link').addEventListener('click', function(e) {
+  e.preventDefault();
+  const skillsSection = document.getElementById('skills');
+  if (skillsSection) {
+    skillsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
 </script>
 </body>
 </html>
