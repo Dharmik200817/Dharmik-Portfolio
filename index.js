@@ -91,3 +91,19 @@ if (aboutLink) {
     }
   });
 }
+
+// Animate About Me table after scroll
+const aboutCard = document.querySelector('.about-card');
+const aboutGrids = document.querySelectorAll('.about-grid > div');
+if (aboutCard) {
+  const aboutObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        aboutCard.classList.add('animated');
+        aboutGrids.forEach(div => div.classList.add('animated'));
+        aboutObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.2 });
+  aboutObserver.observe(aboutCard);
+}

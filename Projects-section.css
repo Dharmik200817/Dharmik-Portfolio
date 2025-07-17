@@ -130,41 +130,45 @@ body {
     font-size: 1rem;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 70px;
+  background: #181818;
+  box-shadow: 0 2px 8px #0002;
+}
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #b74b4b;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
 nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    background: rgba(22, 22, 22, 0.7);
-    backdrop-filter: blur(16px);
-    border-bottom: 0.1rem solid rgba(0,0,0,0.1);
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    padding: 1rem 0;
-    flex-direction: row;
+  margin-left: auto;
+  display: flex;
+  gap: 1.5rem;
 }
-
 nav a {
-    font-size: 1.5rem;
-    color: #f0f0f0;
-    margin: 0 2.5rem;
-    font-weight: 600;
-    transition: color 0.3s, border-bottom 0.3s;
-    border-bottom: 2px solid transparent;
-    text-decoration: none;
-    padding: 0.3rem 0;
-    display: inline-block;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s, border-bottom 0.2s;
+  position: relative;
 }
-
-nav a:hover,
-nav a.active {
-    color: #b74b4b;
-    border-bottom: 2px solid #b74b4b;
-    background: none;
-    border-radius: 0;
+nav a.active, nav a:hover {
+  color: #b74b4b;
+  border-bottom: 6px solid #b74b4b;
+  background: none;
+}
+nav a#skills-link::after {
+  display: none;
+  width: 0 !important;
 }
 
 @media(max-width:995px){
