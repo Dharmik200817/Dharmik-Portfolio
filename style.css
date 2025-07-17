@@ -1597,3 +1597,24 @@ button:hover {
   background: #b74b4b;
   border-radius: 8px;
 }
+
+@keyframes skillFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.timeline-item {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.timeline-item.visible {
+  animation: skillFadeIn 0.8s cubic-bezier(0.4,0,0.2,1) forwards;
+}
