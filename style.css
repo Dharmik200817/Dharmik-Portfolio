@@ -685,7 +685,6 @@ nav a:nth-child(4) {
 }
 .about-grid {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   gap: 2.5rem;
   margin-bottom: 1.2rem;
@@ -780,10 +779,6 @@ nav a:nth-child(4) {
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-    opacity: 1 !important;
-}
-.skills-timeline * {
-    opacity: 1 !important;
 }
 
 @media (max-width: 1200px) {
@@ -1576,6 +1571,22 @@ button:hover {
   color: #b74b4b;
   background: transparent;
   transform: scale(1.18);
+}
+
+.about-link {
+  color: #38c6ff;
+  text-decoration: underline;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+  pointer-events: auto;
+  transition: color 0.2s;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.about-link:hover {
+  color: #b74b4b;
 }
 
 ::-webkit-scrollbar {
