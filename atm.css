@@ -146,7 +146,7 @@ button:hover {
 
 .safety-tips {
     background: #232323;
-    color: #fff;
+    color: #b74b4b;
     border-radius: 0.8rem;
     padding: 1.2rem 1.5rem;
     margin-top: 1.5rem;
@@ -174,59 +174,5 @@ button:hover {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-@media(max-width:995px){
-    nav{
-        position: absolute;
-        display: none;
-        top: 0;
-        right: 0;
-        width: 40%;
-        border-left: 3px solid #b74b4b;
-        border-bottom: 3px solid #b74b4b;
-        border-bottom-left-radius: 2rem;
-        padding: 1rem solid;
-        background-color: #161616;
-        border-top: 0.1rem solid rgba(0,0,0,0.1);
-         flex-direction: column;
-    }
-
-    nav.active{
-        display: block;
-    }
-
-    nav a{
-        display: block;
-        font-size: 2rem;
-        margin: 3rem 0;
-        color: #f0f0f0;
-        font-weight: 600;
-        transition: color 0.3s ease, border-bottom 0.3s ease;
-        border-bottom: 2px solid transparent;
-    }
-
-    nav a:hover,
-    nav a.active{
-        padding: 0rem;
-        border-radius: 0.5rem;
-        border-bottom: 0.5rem solid #b74b4b;
-        color: #ff6347;
-        border-bottom: 2px solid #ff6347;
-    }
-
-    .atm-container {
-        padding: 1.5rem 0.5rem;
-        max-width: 98vw;
-    }
-    h1 {
-        font-size: 2rem;
-    }
-    .atm-screen {
-        font-size: 1.1rem;
-    }
-    .logo {
-        font-size: 1.5rem;
-    }
 }
 

@@ -1296,6 +1296,12 @@ html {
     flex-direction: column;
     align-items: center;
     animation: atmFadeIn 1.2s cubic-bezier(0.4,0,0.2,1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 @keyframes atmFadeIn {
@@ -1625,6 +1631,6 @@ button:hover {
 
 @media (min-width: 950px) and (max-width: 970px) {
   .logo {
-    font-size: 3.2rem; /* Adjust size as desired */
+    font-size: 3.2rem; 
   }
 }
