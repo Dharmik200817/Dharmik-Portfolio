@@ -1,47 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My To-Do List</title>
-    <link rel="stylesheet" href="to-do-styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-      body { font-family: 'Nunito', 'Nunito_e3517e', sans-serif; }
-    </style>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <title>My To-Do List</title>
+  <link rel="stylesheet" href="to-do-styles.css">
 </head>
 <body>
-    <header>
-      <a href="index.html" class="logo">Dharmik Chokhaliya</a>
-      <nav>
-          <a href="index.html">Home</a>
-          <a href="index.html#about" id="about-link">About</a>
-          <a href="projects.html" class="active">Projects</a>
-          <a href="index.html#skills" id="skills-link">My Skills</a>
-      </nav>
-    </header>
-    <section class="todo-container">
-      <h1>To-Do List</h1>
-      <p class="hint">Check the box to mark as done</p>
-      <input type="text" id="taskInput" placeholder="Add new task...">
-      <button id="addBtn" type="button">Add</button>
-      <ul id="taskList"></ul>
-    </section>
+  <header>
+    <a href="index.html" class="logo">Dharmik Chokhaliya</a>
+    <nav>
+      <a href="index.html" class="active">Home</a>
+      <a href="index.html#about" id="about-link">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="index.html#skills" id="skills-link">My Skills</a>
+    </nav>
+  </header>
+  
+  <div class="todo-container">
+    <h1>To-Do List</h1>
+    <p class="hint">Check the box to mark as done</p>
+    <input type="text" id="taskInput" placeholder="Add new task...">
+    <button id="addBtn" type="button">Add</button>
+    <ul id="taskList"></ul>
+  </div>
+  
 
   <script>
     const taskInput = document.getElementById("taskInput");
     const addBtn = document.getElementById("addBtn");
     const taskList = document.getElementById("taskList");
 
-    // Load saved tasks from localStorage
     const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
     savedTasks.forEach(task => {
       const li = createTaskElement(task.text, task.done);
       taskList.appendChild(li);
     });
 
-    // Add task on button click
     addBtn.addEventListener("click", () => {
       const task = taskInput.value.trim();
       if (task === "") return;
@@ -52,14 +47,12 @@
       saveTasks();
     });
 
-    // Add task on Enter key
     taskInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         addBtn.click();
       }
     });
 
-    // Create a task element with a checkbox
     function createTaskElement(text, done) {
       const li = document.createElement("li");
       li.className = "task-item";
@@ -82,7 +75,7 @@
       span.className = "task-text";
 
       const removeBtn = document.createElement("span");
-      removeBtn.innerHTML = '<i class="fa-solid fa-trash"></i>'; // Use Font Awesome dustbin icon
+      removeBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
       removeBtn.className = "remove";
       removeBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -98,7 +91,6 @@
       return li;
     }
 
-    // Save tasks to localStorage
     function saveTasks() {
       const tasks = [];
       document.querySelectorAll("#taskList li").forEach(li => {

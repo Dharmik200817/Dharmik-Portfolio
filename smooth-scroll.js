@@ -1,4 +1,3 @@
-// smooth-scroll.js
 
 document.addEventListener("DOMContentLoaded", () => {
   const HEADER_OFFSET = document.querySelector("header")?.offsetHeight || 70;
@@ -8,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .map(link => document.querySelector(link.getAttribute("href")))
     .filter(Boolean);
 
-  // Smooth scroll with offset
   navLinks.forEach(link => {
     link.addEventListener("click", e => {
       const target = document.querySelector(link.getAttribute("href"));
@@ -21,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Scroll‑spy: highlight nav as you scroll
   window.addEventListener("scroll", () => {
     const scrollPos = window.pageYOffset + HEADER_OFFSET + 5;
     sections.forEach(section => {
