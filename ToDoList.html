@@ -1,101 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="favicon.png" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <title>My To-Do List</title>
-  <link rel="stylesheet" href="to-do-styles.css">
+  <title>ToDo List</title>
+  <link rel="stylesheet" href="to-do-styles.css"/>
 </head>
 <body>
-  <header>
-    <a href="index.html" class="logo">Dharmik Chokhaliya</a>
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="index.html#about" id="about-link">About</a>
-      <a href="projects.html">Projects</a>
-      <a href="index.html#skills" id="skills-link">My Skills</a>
-    </nav>
-  </header>
-  
-  <div class="todo-container">
-    <h1>To-Do List</h1>
-    <p class="hint">Check the box to mark as done</p>
-    <input type="text" id="taskInput" placeholder="Add new task...">
-    <button id="addBtn" type="button">Add</button>
-    <ul id="taskList"></ul>
+  <div class="maincard">
+    <div class="container">
+      <div class="headercard">
+        <div class="header-content">
+          <h2>Todo List</h2>
+        </div>
+      </div>
+
+      <div class="inputsection">
+        <input type="text" id="taskinput" placeholder="Write your Task" maxlength="100"/>
+        <button id="addtaskbtn" type="button">+</button>
+      </div>
+      
+      <button id="clearallbtn" class="clearallbtn" type="button">Clear All</button>
+
+      <ul id="tasklist" class="tasklist" role="list"></ul>
+    </div>
   </div>
-  
 
   <script>
-    const taskInput = document.getElementById("taskInput");
-    const addBtn = document.getElementById("addBtn");
-    const taskList = document.getElementById("taskList");
+    const taskInput = document.getElementById("taskinput");
+    const addBtn = document.getElementById("addtaskbtn");
+    const taskList = document.getElementById("tasklist");
+    const clearAllBtn = document.getElementById("clearallbtn");
 
+    // Load tasks from localStorage
     const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
     savedTasks.forEach(task => {
       const li = createTaskElement(task.text, task.done);
       taskList.appendChild(li);
     });
 
-    addBtn.addEventListener("click", () => {
+    // Add task event
+    addBtn.addEventListener("click", addTask);
+    taskInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        addTask();
+      }
+    });
+
+    // Clear all tasks event
+    clearAllBtn.addEventListener("click", () => {
+      if (taskList.children.length === 0) return;
+      if (confirm("Are you sure you want to clear all tasks?")) {
+        taskList.innerHTML = "";
+        saveTasks();
+      }
+    });
+
+    function addTask() {
       const task = taskInput.value.trim();
       if (task === "") return;
 
       const li = createTaskElement(task, false);
+      li.classList.add("new");
       taskList.appendChild(li);
       taskInput.value = "";
       saveTasks();
-    });
-
-    taskInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        addBtn.click();
-      }
-    });
+    }
 
     function createTaskElement(text, done) {
       const li = document.createElement("li");
-      li.className = "task-item";
+      li.className = "taskitem";
 
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.checked = done;
-      checkbox.className = "task-checkbox";
       checkbox.addEventListener("change", () => {
         if (checkbox.checked) {
-          li.classList.add("done");
+          li.classList.add("completed");
+          span.classList.add("completed");
         } else {
-          li.classList.remove("done");
+          li.classList.remove("completed");
+          span.classList.remove("completed");
         }
         saveTasks();
       });
 
       const span = document.createElement("span");
       span.textContent = text;
-      span.className = "task-text";
+      span.className = "tasktext";
 
-      const removeBtn = document.createElement("span");
-      removeBtn.innerHTML = '<i class="fa-solid fa-trash"></i>';
-      removeBtn.className = "remove";
-      removeBtn.addEventListener("click", (e) => {
+      const iconsDiv = document.createElement("div");
+      iconsDiv.className = "icons";
+
+      const deleteIcon = document.createElement("img");
+      deleteIcon.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23b74b4b' viewBox='0 0 24 24'%3E%3Cpath d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3E%3C/svg%3E";
+      deleteIcon.alt = "Delete";
+      deleteIcon.addEventListener("click", (e) => {
         e.stopPropagation();
         li.remove();
         saveTasks();
       });
 
+      iconsDiv.appendChild(deleteIcon);
       li.appendChild(checkbox);
       li.appendChild(span);
-      li.appendChild(removeBtn);
+      li.appendChild(iconsDiv);
 
-      if (done) li.classList.add("done");
+      if (done) {
+        li.classList.add("completed");
+        span.classList.add("completed");
+      }
+
       return li;
     }
 
     function saveTasks() {
       const tasks = [];
-      document.querySelectorAll("#taskList li").forEach(li => {
-        const checkbox = li.querySelector(".task-checkbox");
-        const text = li.querySelector(".task-text").textContent.trim();
+      document.querySelectorAll("#tasklist li").forEach(li => {
+        const checkbox = li.querySelector("input[type='checkbox']");
+        const text = li.querySelector(".tasktext").textContent.trim();
         tasks.push({
           text: text,
           done: checkbox.checked

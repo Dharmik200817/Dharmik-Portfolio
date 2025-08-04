@@ -66,7 +66,7 @@ header{
     transform: scale(1.1);
 }
 
- a{
+nav a{
     font-size: 2rem; 
     color: #f0f0f0; 
     margin-left: 3rem; 
