@@ -128,6 +128,23 @@
       });
       localStorage.setItem("tasks", JSON.stringify(tasks));
     }
+
+    // Update snake head direction based on movement
+    function updateSnakeDirection(direction) {
+        switch(direction) {
+            case 'up': snakeHead.style.transform = 'rotate(-90deg)'; break;
+            case 'down': snakeHead.style.transform = 'rotate(90deg)'; break;
+            case 'left': snakeHead.style.transform = 'rotate(180deg)'; break;
+            case 'right': snakeHead.style.transform = 'rotate(0deg)'; break;
+        }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (!gameStarted && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+          startGame();
+      }
+      // Handle movement
+    });
   </script>
 </body>
 </html>

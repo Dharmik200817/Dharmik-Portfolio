@@ -3,14 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fun to Play Games</title>
+    <title>Snake Game | Dharmik's Portfolio</title>
     <link rel="stylesheet" href="snake.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-    <h1>Snake Game</h1>
-    <div class="instructions">Use arrow keys or swipe to move the snake. Eat apples to grow. Don't hit the wall or yourself!</div>
-    <div class="score" id="score">Score: 0</div>
-    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <div class="game-container">
+        <div class="game-header">
+            <h1><i class="fas fa-gamepad"></i> Snake Game</h1>
+            <div class="high-score" id="highScore">Best: 0</div>
+        </div>
+        
+        <div class="game-info">
+            <div class="score" id="score">Score: 0</div>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+        </div>
+    </div>
+    
     <script src="snake.js"></script>
 </body>
 </html>
