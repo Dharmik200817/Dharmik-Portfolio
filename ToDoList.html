@@ -9,8 +9,33 @@
   <link rel="stylesheet" href="to-do-styles.css"/>
 </head>
 <body>
-  <div class="maincard">
     <div class="container">
+        <div class="btn" id="home-btn">Home</div>
+        <div class="btn" id="about-btn">About</div>
+        <div class="btn" id="projects-btn">Projects</div>
+        <div class="btn" id="skills-btn">Skills</div>
+        <svg
+          class="outline"
+          overflow="visible"
+          width="500"
+          height="70"
+          viewBox="0 0 500 70"
+          xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+                class="rect"
+                pathLength="100"
+                x="0"
+                y="0"
+                width="500"
+                height="70"
+                fill="transparent"
+                stroke-width="5"
+            ></rect>
+        </svg>
+    </div>
+  <div class="maincard">
+    <div class="todo-container">
       <div class="headercard">
         <div class="header-content">
           <h2>Todo List</h2>
@@ -146,5 +171,35 @@
       // Handle movement
     });
   </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // Navigation functionality
+    const homeBtn = document.getElementById('home-btn');
+    const aboutBtn = document.getElementById('about-btn');
+    const projectsBtn = document.getElementById('projects-btn');
+    const skillsBtn = document.getElementById('skills-btn');
+    
+    // Set Projects as active since we're on ToDoList page
+    projectsBtn.classList.add('active');
+    
+    // Handle button clicks
+    homeBtn.addEventListener('click', () => {
+        window.location.href = 'index.html';
+    });
+    
+    aboutBtn.addEventListener('click', () => {
+        window.location.href = 'index.html#about';
+    });
+    
+    projectsBtn.addEventListener('click', () => {
+        window.location.href = 'projects.html';
+    });
+    
+    skillsBtn.addEventListener('click', () => {
+        window.location.href = 'index.html#skills';
+    });
+});
+</script>
 </body>
 </html>

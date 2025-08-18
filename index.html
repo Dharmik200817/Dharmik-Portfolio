@@ -11,15 +11,31 @@
     <link rel="icon" type="image/png" href="logo2.png">
 </head>
 <body>
-    <header>
-      <a href="#" class="logo">Dharmik Chokhaliya</a>
-        <nav>
-            <a href="#" class="active"> Home</a>
-            <a href="#about-title" id="about-link">About</a>
-            <a href="projects.html">Projects</a>
-            <a href="#skills" id="skills-link">My Skills</a>
-        </nav>
-    </header>
+    <div class="container">
+        <div class="btn" id="home-btn">Home</div>
+        <div class="btn" id="about-btn">About</div>
+        <div class="btn" id="projects-btn">Projects</div>
+        <div class="btn" id="skills-btn">Skills</div>
+        <svg
+          class="outline"
+          overflow="visible"
+          width="500"
+          height="70"
+          viewBox="0 0 500 70"
+          xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+                class="rect"
+                pathLength="100"
+                x="0"
+                y="0"
+                width="500"
+                height="70"
+                fill="transparent"
+                stroke-width="5"
+            ></rect>
+        </svg>
+    </div>
     <section class="home">
         <div class="home-img">
             <img src="logo.png" alt="">
@@ -199,49 +215,83 @@ items.forEach(item => {
 </script>
 
 <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const logo = document.querySelector(".logo");
-            const homeContent = document.querySelector(".home-content");
-            const socialIcons = document.querySelector(".social-icons");
-            const navbar = document.querySelector(".navbar");
-
-            setTimeout(() => {
-                logo.style.transform = "translateX(0)";
-                logo.style.opacity = "1";
-            }, 500);
-
-            setTimeout(() => {
-                homeContent.style.transform = "translateX(0)";
-                homeContent.style.opacity = "1";
-            }, 1500);
-
-            setTimeout(() => {
-                socialIcons.style.transform = "translateY(0)";
-                socialIcons.style.opacity = "1";
-            }, 2500);
-
-            setTimeout(() => {
-                navbar.style.animation = "navbarSlideIn 1s ease forwards";
-            }, 1000);
+document.addEventListener("DOMContentLoaded", () => {
+    // Navigation functionality
+    const homeBtn = document.getElementById('home-btn');
+    const aboutBtn = document.getElementById('about-btn');
+    const projectsBtn = document.getElementById('projects-btn');
+    const skillsBtn = document.getElementById('skills-btn');
+    
+    // Set initial active state
+    homeBtn.classList.add('active');
+    
+    // Handle button clicks
+    homeBtn.addEventListener('click', () => {
+        setActiveButton(homeBtn);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    aboutBtn.addEventListener('click', () => {
+        setActiveButton(aboutBtn);
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+    
+    projectsBtn.addEventListener('click', () => {
+        setActiveButton(projectsBtn);
+        window.location.href = 'projects.html';
+    });
+    
+    skillsBtn.addEventListener('click', () => {
+        setActiveButton(skillsBtn);
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            skillsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+    
+    function setActiveButton(activeBtn) {
+        // Remove active class from all buttons
+        [homeBtn, aboutBtn, projectsBtn, skillsBtn].forEach(btn => {
+            btn.classList.remove('active');
         });
-    </script>
-<script>
-document.getElementById('about-link').addEventListener('click', function(e) {
-  e.preventDefault();
-  const aboutSection = document.getElementById('about');
-  if (aboutSection) {
-    aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-});
+        // Add active class to clicked button
+        activeBtn.classList.add('active');
+    }
+    
+    // Existing animations
+    const logo = document.querySelector(".logo");
+    const homeContent = document.querySelector(".home-content");
+    const socialIcons = document.querySelector(".social-icons");
+    const navbar = document.querySelector(".navbar");
 
-document.getElementById('skills-link').addEventListener('click', function(e) {
-  e.preventDefault();
-  const skillsSection = document.getElementById('skills');
-  if (skillsSection) {
-    skillsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+    setTimeout(() => {
+        if (logo) {
+            logo.style.transform = "translateX(0)";
+            logo.style.opacity = "1";
+        }
+    }, 500);
+
+    setTimeout(() => {
+        homeContent.style.transform = "translateX(0)";
+        homeContent.style.opacity = "1";
+    }, 1500);
+
+    setTimeout(() => {
+        socialIcons.style.transform = "translateY(0)";
+        socialIcons.style.opacity = "1";
+    }, 2500);
+
+    setTimeout(() => {
+        if (navbar) {
+            navbar.style.animation = "navbarSlideIn 1s ease forwards";
+        }
+    }, 1000);
 });
 </script>
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const aboutGrids = document.querySelectorAll(".about-grid");
