@@ -107,7 +107,6 @@ class BottomNavbar {
         behavior: 'smooth'
       });
       
-      // Update URL without page reload
       history.pushState(null, null, `#${sectionId}`);
       
       // Update active state
