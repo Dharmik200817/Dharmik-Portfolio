@@ -250,14 +250,14 @@ span{
 
 .content.left {
   margin-right: auto;
-  margin-left: 50px;
+  margin-left: -58px;
   text-align: right;
   padding-right: auto;
 }
 
 .content.right {
   margin-left: auto;
-  margin-right: -70px;
+  margin-right: 0;
   text-align: left;
   padding-left: 2rem;
 }
@@ -527,9 +527,6 @@ span{
   font-weight: 700;
   position: relative;
   display: inline-block;
-  opacity: 0;
-  transform: translateY(30px) scale(0.95);
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .about-title::after {
@@ -645,126 +642,6 @@ span{
 
 .about-link:hover {
   color: #b74b4b;
-}
-
-/* ===== ABOUT SECTION ANIMATIONS ===== */
-
-/* About title animation */
-.about-title {
-  opacity: 0;
-  transform: translateY(30px) scale(0.95);
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.about-title.animate-in {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  animation: titleGlow 0.8s ease-out forwards;
-}
-
-@keyframes titleGlow {
-  0% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    text-shadow: 0 0 4px rgba(56, 189, 248, 0.1);
-  }
-  50% {
-    text-shadow: 0 0 12px rgba(56, 189, 248, 0.3), 0 0 20px rgba(56, 189, 248, 0.2);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    text-shadow: 0 0 8px rgba(56, 189, 248, 0.2), 0 0 15px rgba(56, 189, 248, 0.1);
-  }
-}
-
-/* About grid animations */
-.about-grid {
-  opacity: 0;
-  transform: translateY(40px) scale(0.95);
-  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.about-grid.animate-in {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  animation: gridSlideIn 0.6s ease-out forwards;
-}
-
-@keyframes gridSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(40px) scale(0.95);
-  }
-  60% {
-    opacity: 0.8;
-    transform: translateY(-5px) scale(1.02);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Individual box animations within grids */
-.about-grid > div {
-  opacity: 0;
-  transform: translateX(20px) scale(0.95);
-  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.about-grid.animate-in > div {
-  opacity: 1;
-  transform: translateX(0) scale(1);
-  animation: boxFadeIn 0.5s ease-out forwards;
-}
-
-.about-grid.animate-in > div:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.about-grid.animate-in > div:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-@keyframes boxFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateX(20px) scale(0.95);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-  }
-  50% {
-    opacity: 0.7;
-    transform: translateX(-2px) scale(1.01);
-    box-shadow: 0 4px 12px rgba(183, 75, 75, 0.1);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-  }
-}
-
-/* Enhanced hover animations for about boxes */
-.about-grid > div::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(183, 75, 75, 0.1), transparent);
-  transition: left 0.6s ease;
-}
-
-.about-grid > div:hover::after {
-  left: 100%;
-}
-
-.about-grid > div:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(183, 75, 75, 0.15);
-  border-color: rgba(183, 75, 75, 0.4);
 }
 
 /* ===== PROJECTS SECTION ===== */
