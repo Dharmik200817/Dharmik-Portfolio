@@ -27,109 +27,9 @@ body{
     overflow-x: hidden;
     background-color: black;
     color: white;
-    padding: 120px 40px 40px 40px;
+    padding: 40px 40px 40px 40px;
     scroll-behavior: auto;
 }
-
-/* ===== HEADER & NAVIGATION ===== */
-/* From Uiverse.io navigation with proper positioning */ 
-.container {
-  position: fixed;
-  top: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 500px;
-  height: 70px;
-  opacity: 0;
-  background: rgba(30, 30, 30, 0.8);
-  backdrop-filter: blur(16px);
-  border-radius: 35px;
-  border: 1px solid rgba(183, 75, 75, 0.3);
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  z-index: 100;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  padding: 1em 1.2em;
-  overflow: visible;
-  animation: navbarSlideIn 0.9s ease forwards, navFloat 4s ease-in-out 0.9s infinite;
-}
-
-.outline {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: 35px;
-  overflow: visible;
-}
-
-.rect {
-  stroke-dashoffset: 5;
-  stroke-dasharray: 0 0 15 120 15 120;
-  transition: 0.5s;
-  stroke: #b74b4b;
-  rx: 35;
-  ry: 35;
-}
-
-.btn {
-  padding: 1em 1.5em;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 25px;
-  font-weight: 500;
-  position: relative;
-  z-index: 2;
-  font-size: 1.6rem;
-  min-width: 80px;
-  text-align: center;
-}
-
-.btn:hover {
-  background: rgba(183, 75, 75, 0.2);
-  transform: translateY(-2px);
-  color: #b74b4b;
-}
-
-.btn.active {
-  background: #b74b4b;
-  color: #fff;
-}
-
-.container:hover .outline .rect {
-  transition: 999999s;
-  stroke-dashoffset: 1;
-  stroke-dasharray: 0;
-}
-
-.btn:nth-child(1):hover ~ svg .rect {
-  stroke-dashoffset: 0;
-  stroke-dasharray: 0 8 15 115 15 8;
-}
-
-.btn:nth-child(2):hover ~ svg .rect {
-  stroke-dashoffset: 0;
-  stroke-dasharray: 0 33 15 85 15 33;
-}
-
-.btn:nth-child(3):hover ~ svg .rect {
-  stroke-dashoffset: 0;
-  stroke-dasharray: 0 58 15 55 15 58;
-}
-
-.btn:nth-child(4):hover ~ svg .rect {
-  stroke-dashoffset: 0;
-  stroke-dasharray: 0 83 15 25 15 83;
-}
-
-.btn:hover ~ .outline .rect {
-  stroke-dashoffset: 0;
-  stroke-dasharray: 0 0 15 120 15 120;
-  transition: 0.5s !important;
-}
-
 
 /* ===== SECTIONS ===== */
 section{
@@ -350,14 +250,14 @@ span{
 
 .content.left {
   margin-right: auto;
-  margin-left: -58px;
+  margin-left: 50px;
   text-align: right;
   padding-right: auto;
 }
 
 .content.right {
   margin-left: auto;
-  margin-right: 0;
+  margin-right: -70px;
   text-align: left;
   padding-left: 2rem;
 }
@@ -627,6 +527,9 @@ span{
   font-weight: 700;
   position: relative;
   display: inline-block;
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .about-title::after {
@@ -742,6 +645,126 @@ span{
 
 .about-link:hover {
   color: #b74b4b;
+}
+
+/* ===== ABOUT SECTION ANIMATIONS ===== */
+
+/* About title animation */
+.about-title {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.about-title.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: titleGlow 0.8s ease-out forwards;
+}
+
+@keyframes titleGlow {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    text-shadow: 0 0 4px rgba(56, 189, 248, 0.1);
+  }
+  50% {
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.3), 0 0 20px rgba(56, 189, 248, 0.2);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    text-shadow: 0 0 8px rgba(56, 189, 248, 0.2), 0 0 15px rgba(56, 189, 248, 0.1);
+  }
+}
+
+/* About grid animations */
+.about-grid {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.about-grid.animate-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: gridSlideIn 0.6s ease-out forwards;
+}
+
+@keyframes gridSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Individual box animations within grids */
+.about-grid > div {
+  opacity: 0;
+  transform: translateX(20px) scale(0.95);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.about-grid.animate-in > div {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  animation: boxFadeIn 0.5s ease-out forwards;
+}
+
+.about-grid.animate-in > div:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.about-grid.animate-in > div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+@keyframes boxFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(20px) scale(0.95);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateX(-2px) scale(1.01);
+    box-shadow: 0 4px 12px rgba(183, 75, 75, 0.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+  }
+}
+
+/* Enhanced hover animations for about boxes */
+.about-grid > div::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(183, 75, 75, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.about-grid > div:hover::after {
+  left: 100%;
+}
+
+.about-grid > div:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(183, 75, 75, 0.15);
+  border-color: rgba(183, 75, 75, 0.4);
 }
 
 /* ===== PROJECTS SECTION ===== */

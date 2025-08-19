@@ -1,4 +1,4 @@
-// Bottom Navbar JavaScript
+// Enhanced Bottom Navbar JavaScript
 class BottomNavbar {
   constructor() {
     this.currentPage = this.getCurrentPage();
@@ -8,13 +8,15 @@ class BottomNavbar {
   getCurrentPage() {
     const path = window.location.pathname;
     const page = path.split('/').pop() || 'index.html';
+    const hash = window.location.hash;
     
-    // Map file names to navigation items
-    if (page === 'index.html' || page === '') return 'home';
+    // Map file names and sections to navigation items
+    if (page === 'index.html' || page === '') {
+      if (hash === '#about') return 'about';
+      if (hash === '#skills') return 'skills';
+      return 'home';
+    }
     if (page === 'projects.html') return 'projects';
-    if (page === 'ToDoList.html') return 'todo';
-    if (page === 'game.html') return 'game';
-    if (page === 'atm.html') return 'atm';
     
     return 'home'; // default
   }
@@ -25,24 +27,16 @@ class BottomNavbar {
     navbar.innerHTML = `
       <div class="bottom-navbar-container">
         <a href="index.html" class="bottom-nav-item" data-page="home">
-          <i class="fas fa-home bottom-nav-icon"></i>
           <span class="bottom-nav-text">Home</span>
         </a>
+        <a href="index.html#about" class="bottom-nav-item" data-page="about">
+          <span class="bottom-nav-text">About Me</span>
+        </a>
         <a href="projects.html" class="bottom-nav-item" data-page="projects">
-          <i class="fas fa-folder-open bottom-nav-icon"></i>
           <span class="bottom-nav-text">Projects</span>
         </a>
-        <a href="ToDoList.html" class="bottom-nav-item" data-page="todo">
-          <i class="fas fa-tasks bottom-nav-icon"></i>
-          <span class="bottom-nav-text">Todo</span>
-        </a>
-        <a href="game.html" class="bottom-nav-item" data-page="game">
-          <i class="fas fa-gamepad bottom-nav-icon"></i>
-          <span class="bottom-nav-text">Game</span>
-        </a>
-        <a href="atm.html" class="bottom-nav-item" data-page="atm">
-          <i class="fas fa-credit-card bottom-nav-icon"></i>
-          <span class="bottom-nav-text">ATM</span>
+        <a href="index.html#skills" class="bottom-nav-item" data-page="skills">
+          <span class="bottom-nav-text">My Skills</span>
         </a>
       </div>
     `;
@@ -69,38 +63,99 @@ class BottomNavbar {
         // Add active class to clicked item
         item.classList.add('active');
         
-        // Optional: Add click animation
+        // Enhanced click animation
         item.style.transform = 'translateY(-3px) scale(0.95)';
         setTimeout(() => {
           item.style.transform = '';
-        }, 150);
+        }, 200);
+
+        // Handle internal page navigation
+        const href = item.getAttribute('href');
+        if (href.includes('#') && href.startsWith('index.html')) {
+          e.preventDefault();
+          const targetSection = href.split('#')[1];
+          
+          if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+            // Already on index page, just scroll
+            this.scrollToSection(targetSection);
+          } else {
+            // Navigate to index page first, then scroll
+            window.location.href = href;
+          }
+        }
       });
 
-      // Add hover sound effect (optional)
+      // Enhanced hover effects
       item.addEventListener('mouseenter', () => {
-        // You can add a subtle sound effect here if needed
-        item.style.transition = 'all 0.2s ease';
+        if (!item.classList.contains('active')) {
+          item.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        }
+      });
+
+      item.addEventListener('mouseleave', () => {
+        item.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
       });
     });
   }
 
+  scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const offsetTop = section.offsetTop - 100; // Account for any fixed headers
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+      
+      // Update URL without page reload
+      history.pushState(null, null, `#${sectionId}`);
+      
+      // Update active state
+      this.currentPage = sectionId;
+      this.setActiveItem();
+    }
+  }
+
   addScrollEffect() {
     let lastScrollY = window.scrollY;
+    let ticking = false;
     const navbar = document.querySelector('.bottom-navbar');
     
-    window.addEventListener('scroll', () => {
+    const updateNavbar = () => {
       const currentScrollY = window.scrollY;
       
-      // Hide navbar when scrolling down, show when scrolling up
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        navbar.style.transform = 'translateX(-50%) translateY(100px)';
-        navbar.style.opacity = '0';
-      } else {
-        navbar.style.transform = 'translateX(-50%) translateY(0)';
-        navbar.style.opacity = '1';
+      // Auto-hide navbar when scrolling down on mobile
+      if (window.innerWidth <= 768) {
+        if (currentScrollY > lastScrollY && currentScrollY > 200) {
+          navbar.style.transform = 'translate(-50%, 150%)';
+        } else {
+          navbar.style.transform = 'translate(-50%, 0)';
+        }
       }
       
       lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(updateNavbar);
+        ticking = true;
+      }
+    });
+
+    // Show navbar on mouse movement near bottom
+    window.addEventListener('mousemove', (e) => {
+      if (window.innerWidth <= 768 && e.clientY > window.innerHeight - 120) {
+        navbar.style.transform = 'translate(-50%, 0)';
+      }
+    });
+  }
+
+  addHashChangeListener() {
+    window.addEventListener('hashchange', () => {
+      this.currentPage = this.getCurrentPage();
+      this.setActiveItem();
     });
   }
 
@@ -120,14 +175,15 @@ class BottomNavbar {
     const navbar = this.createNavbar();
     document.body.appendChild(navbar);
     
-    // Set active item
+    // Set active item and add functionality
     setTimeout(() => {
       this.setActiveItem();
       this.addEventListeners();
       this.addScrollEffect();
+      this.addHashChangeListener();
     }, 100);
     
-    // Add CSS if not already present
+    // Load CSS if not already present
     this.loadCSS();
   }
 

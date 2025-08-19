@@ -270,17 +270,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    const aboutTitle = document.querySelector(".about-title");
     const aboutGrids = document.querySelectorAll(".about-grid");
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+    
+    // Observer for about title
+    const titleObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                entry.target.style.animation = `fadeInUp 0.8s ease-in-out ${index * 0.2}s forwards`;
-                observer.unobserve(entry.target);
+                entry.target.classList.add('animate-in');
+                titleObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.2 });
+    }, { 
+        threshold: 0.2,
+        rootMargin: '0px 0px -30px 0px'
+    });
 
-    aboutGrids.forEach(grid => observer.observe(grid));
+    // Observer for about grids
+    const gridObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Add staggered delay for each grid
+                const gridIndex = Array.from(aboutGrids).indexOf(entry.target);
+                setTimeout(() => {
+                    entry.target.classList.add('animate-in');
+                }, gridIndex * 150); // 150ms delay between each grid
+                gridObserver.unobserve(entry.target);
+            }
+        });
+    }, { 
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // Observe title if it exists
+    if (aboutTitle) {
+        titleObserver.observe(aboutTitle);
+    }
+
+    // Observe all grid elements
+    aboutGrids.forEach(grid => gridObserver.observe(grid));
 });
 </script>
 <script src="bottom-navbar.js"></script>
