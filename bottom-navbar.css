@@ -1,5 +1,10 @@
+/* ===== FONT IMPORTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700&display=swap');
+
 /* ===== FLOATING BOTTOM NAVBAR ===== */
 .bottom-navbar {
+  font-family: Inter, Unbounded, Arial, sans-serif;
   position: fixed;
   bottom: 25px;
   left: 50%;
@@ -32,7 +37,8 @@
   justify-content: center;
   text-decoration: none;
   color: rgba(255, 255, 255, 0.8);
-  font-weight: 600;
+  font-family: Inter, Unbounded, Arial, sans-serif;
+  font-weight: 500;
   font-size: 16px;
   padding: 12px 20px;
   border-radius: 35px;
@@ -42,6 +48,7 @@
   min-width: 100px;
   text-align: center;
   background: transparent;
+  letter-spacing: 0.4px;
 }
 
 /* Hover background effect */
@@ -93,9 +100,10 @@
 }
 
 .bottom-nav-text {
+  font-family: Inter, Unbounded, Arial, sans-serif;
   font-size: 16px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
   position: relative;
   z-index: 2;
 }
@@ -159,12 +167,16 @@
   
   .bottom-nav-item {
     font-size: 14px;
+    font-weight: 500;
     padding: 10px 16px;
     min-width: 85px;
+    letter-spacing: 0.3px;
   }
   
   .bottom-nav-text {
     font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
   }
 }
 
@@ -181,12 +193,15 @@
   
   .bottom-nav-item {
     font-size: 13px;
+    font-weight: 500;
     padding: 8px 12px;
     min-width: 75px;
+    letter-spacing: 0.2px;
   }
   
   .bottom-nav-text {
     font-size: 13px;
+    font-weight: 500;
     letter-spacing: 0.2px;
   }
 }
@@ -200,12 +215,16 @@
   
   .bottom-nav-item {
     font-size: 12px;
+    font-weight: 500;
     padding: 6px 10px;
     min-width: 65px;
+    letter-spacing: 0.2px;
   }
   
   .bottom-nav-text {
     font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
   }
 }
 
