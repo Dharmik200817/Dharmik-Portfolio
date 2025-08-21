@@ -10,6 +10,9 @@
     <script src="typewriter.js"></script>
     <title>Dharmik Chokhaliya | Portfolio</title>
     <link rel="icon" type="image/png" href="logo2.png">
+    <style>
+      body { opacity: 0; transition: opacity 0.5s ease; }
+    </style>
 </head>
 <body>
     <section class="home">
@@ -143,12 +146,12 @@
             </a>
             <a href="#about" class="bottom-nav-item" data-page="about">
                 <span class="bottom-nav-text">About Me</span>
-            </a>
+              </a>
+              <a href="#skills" class="bottom-nav-item" data-page="skills">
+                  <span class="bottom-nav-text">My Skills</span>
+              </a>
             <a href="projects.html" class="bottom-nav-item" data-page="projects">
                 <span class="bottom-nav-text">Projects</span>
-            </a>
-            <a href="#skills" class="bottom-nav-item" data-page="skills">
-                <span class="bottom-nav-text">My Skills</span>
             </a>
         </div>
     </div>
@@ -204,7 +207,6 @@ items.forEach(item => {
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-    // Home page animations
     const homeContent = document.querySelector(".home-content");
     const socialIcons = document.querySelector(".social-icons");
 
@@ -220,7 +222,24 @@ document.addEventListener("DOMContentLoaded", () => {
             socialIcons.style.transform = "translateY(0)";
             socialIcons.style.opacity = "1";
         }
+        const navbar = document.querySelector('.bottom-navbar');
+        if (navbar) {
+            navbar.style.opacity = '1';
+            navbar.style.animation = 'slideUpFloat 1s cubic-bezier(0.18, 0.9, 0.38, 1) forwards, float 4s ease-in-out 1.5s infinite';
+        }
+        const navItems = document.querySelectorAll('.bottom-nav-item');
+        navItems.forEach((item, idx) => {
+            item.style.opacity = '0';
+            setTimeout(() => {
+                item.style.transition = 'opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                item.style.opacity = '1';
+            }, 1200 + idx * 120);
+        });
     }, 1000);
+
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+    }, 1600); 
 });
 </script>
 
@@ -241,11 +260,9 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <script>
-// Bottom navbar functionality
 document.addEventListener("DOMContentLoaded", () => {
     const navItems = document.querySelectorAll('.bottom-nav-item');
     
-    // Set active item based on current page/section
     function setActiveItem() {
         const currentPath = window.location.pathname;
         const currentHash = window.location.hash;
@@ -268,19 +285,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     
-    // Add click event listeners
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             const href = item.getAttribute('href');
             const dataPage = item.getAttribute('data-page');
             
-            // Handle anchor links on same page
             if (href.startsWith('#')) {
                 e.preventDefault();
                 
                 let targetElement;
                 
-                // Scroll to specific elements based on data-page attribute
                 if (dataPage === 'about') {
                     targetElement = document.querySelector('.about-title');
                 } else if (dataPage === 'skills') {
@@ -302,10 +316,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
     
-    // Set initial active item
     setActiveItem();
     
-    // Listen for hash changes
     window.addEventListener('hashchange', setActiveItem);
 });
 </script>
