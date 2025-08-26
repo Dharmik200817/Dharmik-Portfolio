@@ -46,6 +46,61 @@
         </ul>
       </div>
     </section>
+    
+    <!-- Bottom Navigation -->
+    <div class="bottom-navbar">
+        <div class="bottom-navbar-container">
+            <a href="index.html" class="bottom-nav-item" data-page="home">
+                <span class="bottom-nav-text">Home</span>
+            </a>
+            <a href="index.html#about" class="bottom-nav-item" data-page="about">
+                <span class="bottom-nav-text">About Me</span>
+            </a>
+            <a href="projects.html" class="bottom-nav-item active" data-page="projects">
+                <span class="bottom-nav-text">Projects</span>
+            </a>
+            <a href="index.html#skills" class="bottom-nav-item" data-page="skills">
+                <span class="bottom-nav-text">My Skills</span>
+            </a>
+        </div>
+    </div>
+
+<script>
+// Bottom navbar functionality
+document.addEventListener("DOMContentLoaded", () => {
+    const navItems = document.querySelectorAll('.bottom-nav-item');
+    
+    // Set active item based on current page/section
+    function setActiveItem() {
+        const currentPath = window.location.pathname;
+        
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            const href = item.getAttribute('href');
+            
+            if (currentPath.includes('projects.html') && href === 'projects.html') {
+                item.classList.add('active');
+            }
+        });
+    }
+    
+    // Add click event listeners
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            const href = item.getAttribute('href');
+            
+            // Handle navigation
+            if (href.startsWith('index.html')) {
+                // Navigate to index page
+                window.location.href = href;
+            }
+        });
+    });
+    
+    // Set initial active item
+    setActiveItem();
+});
+</script>
     <script src="bottom-navbar.js"></script>
   </body>
 </html>
