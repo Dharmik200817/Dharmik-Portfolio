@@ -696,68 +696,158 @@ span{
 
 .project-card {
     display: block;
-    background: linear-gradient(120deg, #232323 80%, #2c1818 100%);
-    border-radius: 22px;
-    box-shadow: 0 6px 32px 0 rgba(183, 75, 75, 0.18);
+    background: linear-gradient(135deg, rgba(18, 18, 18, 0.9) 0%, rgba(28, 28, 28, 0.8) 100%);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 24px;
+    border: 1px solid rgba(183, 75, 75, 0.2);
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.3),
+        0 2px 8px rgba(183, 75, 75, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     color: #fff;
-    font-size: 1.55rem;
-    padding: 2.7rem 2.2rem;
+    font-size: 1.6rem;
+    padding: 2.8rem 2.4rem;
     margin: 0;
     text-decoration: none;
-    transition: background 0.2s, box-shadow 0.2s, transform 0.13s, border 0.2s;
-    border-left: 8px solid #b74b4b;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     cursor: pointer;
     position: relative;
     outline: none;
+    overflow: hidden;
+    font-weight: 500;
+}
+
+/* Animated gradient border effect */
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px;
+    padding: 2px;
+    background: linear-gradient(45deg, 
+        transparent, 
+        rgba(183, 75, 75, 0.3), 
+        transparent, 
+        rgba(183, 75, 75, 0.5),
+        transparent);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* Shimmer effect */
+.project-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, 
+        transparent 30%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 70%);
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    transition: transform 0.8s ease;
 }
 
 .project-card:focus {
-    border-color: #fff;
-    box-shadow: 0 0 0 3px #b74b4b55;
+    border-color: rgba(183, 75, 75, 0.6);
+    box-shadow: 
+        0 0 0 3px rgba(183, 75, 75, 0.3),
+        0 16px 48px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .project-card:hover {
-    background: linear-gradient(120deg, #181818 80%, #3a2323 100%);
-    box-shadow: 0 10px 32px #b74b4b44;
-    transform: scale(1.035);
+    background: linear-gradient(135deg, rgba(28, 28, 28, 0.95) 0%, rgba(38, 38, 38, 0.9) 100%);
+    border-color: rgba(183, 75, 75, 0.4);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 8px 24px rgba(183, 75, 75, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    transform: translateY(-8px) scale(1.02);
     color: #fff;
     text-decoration: none;
-    border-left: 8px solid #aa3535;
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+.project-card:hover::after {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
 }
 
 .project-card .project-title {
     color: #b74b4b;
-    font-size: 2.1rem;
-    font-weight: 800;
-    margin-bottom: 1.1rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
     display: block;
-    letter-spacing: 0.04em;
-    text-shadow: 0 1px 8px #b74b4b22;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 12px rgba(183, 75, 75, 0.3);
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(135deg, #b74b4b 0%, #d65555 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .project-title {
+    transform: translateY(-2px);
+    text-shadow: 0 4px 16px rgba(183, 75, 75, 0.4);
 }
 
 .project-card .project-desc {
-    color: #fff;
-    font-size: 1.25rem;
-    margin-top: 0.4rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.3rem;
+    margin-top: 0.6rem;
     display: block;
-    opacity: 0.92;
-    line-height: 1.6;
+    line-height: 1.7;
+    position: relative;
+    z-index: 2;
+    font-weight: 400;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .project-desc {
+    color: rgba(255, 255, 255, 0.95);
+    transform: translateY(-1px);
 }
 
 .project-card .project-meta {
-    margin-top: 1.2rem;
-    font-size: 1.05rem;
-    color: #b74b4b;
-    opacity: 0.7;
+    margin-top: 1.8rem;
+    font-size: 1.1rem;
+    color: rgba(183, 75, 75, 0.8);
     display: flex;
-    gap: 1.2rem;
+    gap: 1.6rem;
     align-items: center;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .project-meta {
+    color: rgba(183, 75, 75, 0.9);
+    transform: translateY(-1px);
 }
 
 .project-card .project-meta i {
-    margin-right: 0.4rem;
+    margin-right: 0.5rem;
     color: #b74b4b;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+}
+
+.project-card:hover .project-meta i {
+    transform: scale(1.1);
 }
 
 /* ===== ATM SECTION ===== */
@@ -1372,16 +1462,29 @@ button:hover {
     }
     
     .project-card {
-        font-size: 1.1rem;
-        padding: 1.2rem 1rem;
+        font-size: 1.2rem;
+        padding: 2.2rem 1.8rem;
+        border-radius: 20px;
     }
     
     .project-card .project-title {
-        font-size: 1.3rem;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
     }
     
     .project-card .project-desc {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    
+    .project-card .project-meta {
+        margin-top: 1.4rem;
         font-size: 1rem;
+        gap: 1.2rem;
+    }
+    
+    .project-card .project-meta i {
+        font-size: 1.1rem;
     }
 }
 
