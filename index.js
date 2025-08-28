@@ -92,7 +92,7 @@ if (aboutLink) {
   });
 }
 
-// Animate About Me table after scroll
+// Animate About Me table after scrol
 const aboutCard = document.querySelector('.about-card');
 const aboutGrids = document.querySelectorAll('.about-grid > div');
 if (aboutCard) {
