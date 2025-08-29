@@ -41,7 +41,7 @@
       <div class="container">
         <div class="projects-grid">
           <!-- Project Card 1 -->
-          <article class="project-card modern-card" data-category="productivity">
+          <article class="project-card modern-card clickable-card" data-category="productivity" data-href="ToDoList.html">
             <div class="card-header">
               <div class="project-icon">
                 <i class="fas fa-check-circle"></i>
@@ -62,7 +62,7 @@
               </div>
             </div>
             <div class="card-footer">
-              <a href="ToDoList.html" target="_blank" class="btn-primary">
+              <a href="ToDoList.html" target="_blank" class="btn-primary" onclick="event.stopPropagation();">
                 <span>View Project</span>
                 <i class="fas fa-external-link-alt"></i>
               </a>
@@ -70,7 +70,7 @@
           </article>
 
           <!-- Project Card 2 -->
-          <article class="project-card modern-card" data-category="simulation">
+          <article class="project-card modern-card clickable-card" data-category="simulation" data-href="atm.html">
             <div class="card-header">
               <div class="project-icon">
                 <i class="fas fa-university"></i>
@@ -91,7 +91,7 @@
               </div>
             </div>
             <div class="card-footer">
-              <a href="atm.html" target="_blank" class="btn-primary">
+              <a href="atm.html" target="_blank" class="btn-primary" onclick="event.stopPropagation();">
                 <span>View Project</span>
                 <i class="fas fa-external-link-alt"></i>
               </a>
@@ -99,7 +99,7 @@
           </article>
 
           <!-- Project Card 3 -->
-          <article class="project-card modern-card" data-category="game">
+          <article class="project-card modern-card clickable-card" data-category="game" data-href="game.html">
             <div class="card-header">
               <div class="project-icon">
                 <i class="fas fa-gamepad"></i>
@@ -120,7 +120,7 @@
               </div>
             </div>
             <div class="card-footer">
-              <a href="game.html" target="_blank" class="btn-primary">
+              <a href="game.html" target="_blank" class="btn-primary" onclick="event.stopPropagation();">
                 <span>View Project</span>
                 <i class="fas fa-external-link-alt"></i>
               </a>
@@ -128,7 +128,7 @@
           </article>
 
           <!-- Project Card 4 -->
-          <article class="project-card modern-card" data-category="showcase">
+          <article class="project-card modern-card clickable-card" data-category="showcase" data-href="Collage.html">
             <div class="card-header">
               <div class="project-icon">
                 <i class="fas fa-car"></i>
@@ -149,7 +149,7 @@
               </div>
             </div>
             <div class="card-footer">
-              <a href="Collage.html" target="_blank" class="btn-primary">
+              <a href="Collage.html" target="_blank" class="btn-primary" onclick="event.stopPropagation();">
                 <span>View Project</span>
                 <i class="fas fa-external-link-alt"></i>
               </a>
@@ -157,33 +157,6 @@
           </article>
         </div>
 
-        <!-- Additional Info Section -->
-        <div class="projects-info">
-          <div class="info-card">
-            <div class="info-icon">
-              <i class="fas fa-code"></i>
-            </div>
-            <h4>Clean Code</h4>
-            <p>Every project follows modern development practices and clean code principles.</p>
-          </div>
-          <div class="info-card">
-            <div class="info-icon">
-              <i class="fas fa-mobile-alt"></i>
-            </div>
-            <h4>Responsive Design</h4>
-            <p>Optimized for all devices with pixel-perfect responsive layouts.</p>
-          </div>
-          <div class="info-card">
-            <div class="info-icon">
-              <i class="fas fa-rocket"></i>
-            </div>
-            <h4>Performance</h4>
-            <p>Built for speed with optimized assets and efficient code architecture.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-    
     <!-- Bottom Navigation -->
     <div class="bottom-navbar">
         <div class="bottom-navbar-container">
@@ -193,11 +166,12 @@
             <a href="index.html#about" class="bottom-nav-item" data-page="about">
                 <span class="bottom-nav-text">About Me</span>
             </a>
-            <a href="projects.html" class="bottom-nav-item active" data-page="projects">
-                <span class="bottom-nav-text">Projects</span>
-            </a>
+
             <a href="index.html#skills" class="bottom-nav-item" data-page="skills">
                 <span class="bottom-nav-text">My Skills</span>
+            </a>
+            <a href="projects.html" class="bottom-nav-item active" data-page="projects">
+                <span class="bottom-nav-text">Projects</span>
             </a>
         </div>
     </div>
@@ -224,11 +198,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // Add click event listeners
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default link behavior
             const href = item.getAttribute('href');
             
             // Handle navigation
             if (href.startsWith('index.html')) {
-                // Navigate to index page
+                // Check if it's a section link
+                if (href.includes('#')) {
+                    // Navigate to index page with section
+                    window.location.href = href;
+                } else {
+                    // Navigate to index page
+                    window.location.href = 'index.html';
+                }
+            } else if (href === 'projects.html') {
+                // Already on projects page, just update active state
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+            } else {
+                // Navigate to other pages
                 window.location.href = href;
             }
         });
@@ -236,6 +224,37 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Set initial active item
     setActiveItem();
+});
+
+// Make project cards clickable
+document.addEventListener("DOMContentLoaded", () => {
+    const clickableCards = document.querySelectorAll('.clickable-card');
+    
+    clickableCards.forEach(card => {
+        // Add pointer cursor style
+        card.style.cursor = 'pointer';
+        
+        card.addEventListener('click', (e) => {
+            // Don't trigger if clicking on the button or link
+            if (e.target.closest('.btn-primary')) {
+                return;
+            }
+            
+            const href = card.getAttribute('data-href');
+            if (href) {
+                window.open(href, '_blank');
+            }
+        });
+        
+        // Add hover effect
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-8px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0) scale(1)';
+        });
+    });
 });
 </script>
     <script src="bottom-navbar.js"></script>
