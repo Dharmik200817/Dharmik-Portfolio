@@ -280,7 +280,7 @@ body {
   transform: translateY(-1px) scale(1.02);
 }
 
-/* ===== Media Controls ===== */
+/* ===== Media Controls ==== */
 
 @media (max-width: 700px) {
   .navbar {
