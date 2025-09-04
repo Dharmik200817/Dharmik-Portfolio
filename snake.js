@@ -2,6 +2,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const box = 20;
 let snake = [{x: 9*box, y: 10*box}];
+let direction = 'RIGHT'; // Start moving right automatically
 let apple = {
     x: Math.floor(Math.random()*20)*box,
     y: Math.floor(Math.random()*20)*box
@@ -13,6 +14,12 @@ let gameStarted = false;
 
 // Update high score display
 document.getElementById('highScore').textContent = `Best: ${highScore}`;
+
+function startGame() {
+    gameStarted = true;
+    document.getElementById('gameOverlay').style.display = 'none';
+    resetGame();
+}
 
 let touchStartX = 0, touchStartY = 0;
 function handleTouchStart(e) {
@@ -41,36 +48,34 @@ function isMobile() {
 }
 
 function setupControls() {
-    // Remove all existing event listeners safely
-    try {
-        document.body.ontouchstart = null;
-        document.body.ontouchmove = null;
-        document.body.ontouchend = null;
-        canvas.ontouchstart = null;
-        canvas.ontouchmove = null;
-        canvas.ontouchend = null;
-        canvas.onmousedown = null;
+    // Remove all existing event listeners
+    document.body.ontouchstart = null;
+    document.body.ontouchmove = null;
+    document.body.ontouchend = null;
+    canvas.ontouchstart = null;
+    canvas.ontouchmove = null;
+    canvas.ontouchend = null;
+    canvas.onmousedown = null;
 
-        if (isMobile()) {
-            document.body.style.touchAction = 'none'; // Prevent scrolling
-            document.body.addEventListener('touchstart', handleTouchStart, {passive: false});
-            document.body.addEventListener('touchmove', handleTouchMove, {passive: false});
-            document.body.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                if (gameOver) resetGame();
-            }, {passive: false});
-        } else {
-            canvas.addEventListener('touchstart', handleTouchStart, {passive: false});
-            canvas.addEventListener('touchmove', handleTouchMove, {passive: false});
-            canvas.addEventListener('touchend', function(e) {
-                if (gameOver) resetGame();
-            });
-            canvas.addEventListener('mousedown', function(e) {
-                if (gameOver) resetGame();
-            });
-        }
-    } catch (error) {
-        console.error('Error setting up controls:', error);
+    // Always use full screen touch controls for mobile
+    if (isMobile()) {
+        document.body.style.touchAction = 'none'; // Prevent scrolling
+        document.body.addEventListener('touchstart', handleTouchStart, {passive: false});
+        document.body.addEventListener('touchmove', handleTouchMove, {passive: false});
+        document.body.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            if (gameOver) resetGame();
+        }, {passive: false});
+    } else {
+        // Desktop controls - canvas only
+        canvas.addEventListener('touchstart', handleTouchStart, {passive: false});
+        canvas.addEventListener('touchmove', handleTouchMove, {passive: false});
+        canvas.addEventListener('touchend', function(e) {
+            if (gameOver) resetGame();
+        });
+        canvas.addEventListener('mousedown', function(e) {
+            if (gameOver) resetGame();
+        });
     }
 }
 
@@ -80,56 +85,157 @@ function keydownRestartHandler(e) {
 document.removeEventListener('keydown', keydownRestartHandler);
 document.addEventListener('keydown', keydownRestartHandler);
 
+// Arrow key controls
 document.addEventListener('keydown', e => {
-    // Auto-start game on first arrow key press
-    if (!gameStarted && ['ArrowLeft', 'ArrowUp', 'ArrowRight', 'ArrowDown'].includes(e.key)) {
-        startGame();
-    }
-    
-    // Use nextDirection to buffer direction changes and prevent multiple changes per frame
-    if (e.key === 'ArrowLeft' && direction !== 'RIGHT' && nextDirection !== 'LEFT') {
-        nextDirection = 'LEFT';
-    }
-    if (e.key === 'ArrowUp' && direction !== 'DOWN' && nextDirection !== 'UP') {
-        nextDirection = 'UP';
-    }
-    if (e.key === 'ArrowRight' && direction !== 'LEFT' && nextDirection !== 'RIGHT') {
-        nextDirection = 'RIGHT';
-    }
-    if (e.key === 'ArrowDown' && direction !== 'UP' && nextDirection !== 'DOWN') {
-        nextDirection = 'DOWN';
-    }
+    if (e.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
+    if (e.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
+    if (e.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
+    if (e.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
 });
 
-function startGame() {
-    gameStarted = true;
-    // No overlay to hide anymore
-    resetGame();
-}
-
 function drawSnake() {
-    snake.forEach((segment, i) => {
-        if (i === 0) {
-            // Draw head as a red box
-            ctx.fillStyle = '#ff0000';
-            ctx.strokeStyle = '#b71c1c';
-            ctx.fillRect(segment.x, segment.y, box, box);
-            ctx.strokeRect(segment.x, segment.y, box, box);
+    if (snake.length === 0) return;
+    
+    // Draw the snake body as a continuous path
+    const radius = box / 2 - 2;
+    
+    // Create continuous body path
+    ctx.beginPath();
+    ctx.lineWidth = box - 4;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    
+    // Create gradient for the snake body
+    const bodyGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    bodyGradient.addColorStop(0, '#8bc34a');
+    bodyGradient.addColorStop(0.3, '#689f38');
+    bodyGradient.addColorStop(0.7, '#4e7c31');
+    bodyGradient.addColorStop(1, '#388e3c');
+    
+    ctx.strokeStyle = bodyGradient;
+    
+    // Start from the tail and draw continuous path
+    for (let i = snake.length - 1; i >= 0; i--) {
+        const segment = snake[i];
+        const x = segment.x + box/2;
+        const y = segment.y + box/2;
+        
+        if (i === snake.length - 1) {
+            // Start from tail
+            ctx.moveTo(x, y);
         } else {
-            // Draw body segments
-            ctx.fillStyle = '#4caf50';
-            ctx.strokeStyle = '#2e7d32';
-            ctx.fillRect(segment.x, segment.y, box, box);
-            ctx.strokeRect(segment.x, segment.y, box, box);
+            // Draw smooth curve to next segment
+            const prevSegment = snake[i + 1];
+            const prevX = prevSegment.x + box/2;
+            const prevY = prevSegment.y + box/2;
+            
+            // Use quadratic curve for smoother connections
+            const midX = (x + prevX) / 2;
+            const midY = (y + prevY) / 2;
+            ctx.quadraticCurveTo(prevX, prevY, midX, midY);
+            ctx.lineTo(x, y);
         }
-    });
+    }
+    
+    ctx.stroke();
+    
+    // Draw border for depth
+    ctx.beginPath();
+    ctx.lineWidth = box - 1;
+    ctx.strokeStyle = '#1b5e20';
+    
+    for (let i = snake.length - 1; i >= 0; i--) {
+        const segment = snake[i];
+        const x = segment.x + box/2;
+        const y = segment.y + box/2;
+        
+        if (i === snake.length - 1) {
+            ctx.moveTo(x, y);
+        } else {
+            const prevSegment = snake[i + 1];
+            const prevX = prevSegment.x + box/2;
+            const prevY = prevSegment.y + box/2;
+            
+            const midX = (x + prevX) / 2;
+            const midY = (y + prevY) / 2;
+            ctx.quadraticCurveTo(prevX, prevY, midX, midY);
+            ctx.lineTo(x, y);
+        }
+    }
+    
+    ctx.stroke();
+    
+    // Draw the head separately for better definition
+    const head = snake[0];
+    const headX = head.x + box/2;
+    const headY = head.y + box/2;
+    
+    // Head gradient
+    const headGradient = ctx.createRadialGradient(headX - radius*0.3, headY - radius*0.3, 0, headX, headY, radius);
+    headGradient.addColorStop(0, '#8bc34a');
+    headGradient.addColorStop(0.6, '#689f38');
+    headGradient.addColorStop(1, '#388e3c');
+    
+    ctx.fillStyle = headGradient;
+    ctx.beginPath();
+    ctx.arc(headX, headY, radius, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    // Head border
+    ctx.strokeStyle = '#1b5e20';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Add some shine to the head
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.beginPath();
+    ctx.arc(headX - radius*0.3, headY - radius*0.3, radius*0.4, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    // Simple dot eyes
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    ctx.arc(headX - box*0.15, headY - box*0.15, 2, 0, 2*Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(headX + box*0.15, headY - box*0.15, 2, 0, 2*Math.PI);
+    ctx.fill();
 }
 
 function drawApple() {
-    ctx.fillStyle = '#fff';
+    const centerX = apple.x + box/2;
+    const centerY = apple.y + box/2;
+    const radius = box/2 - 2;
+    
+    // Apple gradient
+    const appleGradient = ctx.createRadialGradient(centerX - radius*0.3, centerY - radius*0.3, 0, centerX, centerY, radius);
+    appleGradient.addColorStop(0, '#ff5722');
+    appleGradient.addColorStop(0.6, '#e64a19');
+    appleGradient.addColorStop(1, '#d84315');
+    
+    ctx.fillStyle = appleGradient;
     ctx.beginPath();
-    ctx.arc(apple.x + box/2, apple.y + box/2, box/2-2, 0, 2*Math.PI);
+    ctx.arc(centerX, centerY, radius, 0, 2*Math.PI);
     ctx.fill();
+    
+    // Apple border
+    ctx.strokeStyle = '#bf360c';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    
+    // Apple shine
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.beginPath();
+    ctx.ellipse(centerX - radius*0.3, centerY - radius*0.4, radius*0.3, radius*0.4, -0.5, 0, 2*Math.PI);
+    ctx.fill();
+    
+    // Apple stem
+    ctx.strokeStyle = '#4e7c31';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(centerX, apple.y + 2);
+    ctx.lineTo(centerX, apple.y - 2);
+    ctx.stroke();
 }
 
 function draw() {
@@ -139,11 +245,7 @@ function draw() {
 }
 
 function moveSnake() {
-    if (!direction) return;
-    
-    // Apply the buffered direction change at the start of each frame
-    direction = nextDirection;
-    
+    // Snake always moves in the current direction
     const head = {x: snake[0].x, y: snake[0].y};
     if (direction === 'LEFT') head.x -= box;
     if (direction === 'UP') head.y -= box;
@@ -175,15 +277,8 @@ function moveSnake() {
 
 let gameInterval;
 function resetGame() {
-    // Clear any existing interval first
-    if (gameInterval) {
-        clearTimeout(gameInterval);
-        gameInterval = null;
-    }
-    
     snake = [{x: 9*box, y: 10*box}];
-    direction = 'RIGHT'; // Start moving right
-    nextDirection = 'RIGHT'; // Reset the direction buffer
+    direction = 'RIGHT'; // Start moving right automatically
     apple = {
         x: Math.floor(Math.random()*20)*box,
         y: Math.floor(Math.random()*20)*box
@@ -200,9 +295,10 @@ function resetGame() {
     gameOver = false;
     gameStarted = true;
     document.getElementById('score').textContent = 'Score: ' + score;
+    document.getElementById('gameOverlay').style.display = 'none';
     draw();
-    // SNAKE SPEED: 400ms delay between moves (lower = faster, higher = slower)
-    gameInterval = setTimeout(gameLoop, 300);
+    clearTimeout(gameInterval);
+    setTimeout(gameLoop, 400);
 }
 
 function gameLoop() {
@@ -211,11 +307,11 @@ function gameLoop() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         ctx.fillStyle = '#fff';
-        ctx.font = '2rem Poppins, sans-serif';
+        ctx.font = 'bold 2rem Arial, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('Game Over!', canvas.width/2, canvas.height/2 - 20);
         
-        ctx.font = '1.2rem Poppins, sans-serif';
+        ctx.font = 'bold 1.2rem Arial, sans-serif';
         ctx.fillStyle = '#b74b4b';
         ctx.fillText('Score: ' + score, canvas.width/2, canvas.height/2 + 20);
         
@@ -225,8 +321,8 @@ function gameLoop() {
         }
         
         ctx.fillStyle = '#ccc';
-        ctx.font = '1rem Poppins, sans-serif';
-        ctx.fillText('Press Enter or tap to restart', canvas.width/2, canvas.height/2 + 80);
+        ctx.font = '1rem Arial, sans-serif';
+        ctx.fillText('Tap to restart', canvas.width/2, canvas.height/2 + 80);
         return;
     }
     
@@ -235,24 +331,14 @@ function gameLoop() {
     moveSnake();
     draw();
     
-    // Clear previous timeout before setting new one
-    if (gameInterval) {
-        clearTimeout(gameInterval);
-    }
-    // SNAKE SPEED: 400ms delay between moves (lower = faster, higher = slower)
-    gameInterval = setTimeout(gameLoop, 400);
+    // Dynamic speed based on snake length
+    const gameSpeed = Math.max(120, 200 - (snake.length * 5));
+    gameInterval = setTimeout(gameLoop, gameSpeed);
 }
-// Initialize game with error handling
-try {
-    draw();
-    setupControls();
-    window.addEventListener('resize', setupControls);
-    
-    // Start the game immediately
-    startGame();
-    
-    // Make startGame function available globally for the HTML button
-    window.startGame = startGame;
-} catch (error) {
-    console.error('Error initializing game:', error);
-}
+// Initialize game
+draw();
+setupControls();
+window.addEventListener('resize', setupControls);
+
+// Make startGame function globally available
+window.startGame = startGame;
